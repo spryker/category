@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Category\Persistence\Propel;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryQuery as BaseSpyCategoryQuery;
+use Orm\Zed\Category\Persistence\Base\SpyCategory as BaseSpyCategory;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_category' table.
+ * Skeleton subclass for representing a row from the 'spy_category' table.
  *
  *
  *
@@ -16,8 +16,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryQuery as Base
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyCategoryQuery extends BaseSpyCategoryQuery
+abstract class AbstractSpyCategory extends BaseSpyCategory
 {
 
-} // SpyCategoryQuery
-
+}

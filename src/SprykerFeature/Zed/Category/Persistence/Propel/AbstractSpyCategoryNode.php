@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Category\Persistence\Propel;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNode as BaseSpyCategoryNode;
+use Orm\Zed\Category\Persistence\Base\SpyCategoryNode as BaseSpyCategoryNode;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_category_node' table.
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNode as BaseS
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyCategoryNode extends BaseSpyCategoryNode
+abstract class AbstractSpyCategoryNode extends BaseSpyCategoryNode
 {
 
 }
