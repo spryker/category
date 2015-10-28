@@ -5,10 +5,10 @@
 
 namespace SprykerFeature\Zed\Category\Persistence\Propel;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryAttributeQuery as BaseSpyCategoryAttributeQuery;
+use Orm\Zed\Category\Persistence\Base\SpyCategoryClosureTable as BaseSpyCategoryClosureTable;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_category_attribute' table.
+ * Skeleton subclass for representing a row from the 'spy_category_closure_table' table.
  *
  *
  *
@@ -16,8 +16,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryAttributeQuer
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpyCategoryAttributeQuery extends BaseSpyCategoryAttributeQuery
+abstract class AbstractSpyCategoryClosureTable extends BaseSpyCategoryClosureTable
 {
 
-} // SpyCategoryAttributeQuery
-
+}
