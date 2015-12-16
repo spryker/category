@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method CategoryQueryContainer getQueryContainer()
  */
-class CategoryDependencyContainer extends AbstractCommunicationFactory
+class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
 
     protected $currentLocale;
