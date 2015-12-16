@@ -29,7 +29,7 @@ use Spryker\Zed\Category\Persistence\CategoryQueryContainer;
 /**
  * @method CategoryQueryContainer getQueryContainer()
  */
-class CategoryDependencyContainer extends AbstractBusinessFactory
+class CategoryBusinessFactory extends AbstractBusinessFactory
 {
 
     /**
