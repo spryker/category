@@ -1,6 +1,6 @@
 /**
  *
- * Spryker alert message manager
+ * Category logic
  * @copyright: Spryker Systems GmbH
  *
  */
@@ -8,11 +8,6 @@
 'use strict';
 
 window.serializedList = {};
-
-// var $ = require('jquery');
-// window.$ = $;
-// window.jQuery = $;
-// var SprykerAjax = require('vendor/spryker/spryker/Bundles/Gui/assets/Zed/modules/legacy/SprykerAjax');
 
 var categoryHelper = require('./helpers.js');
 
