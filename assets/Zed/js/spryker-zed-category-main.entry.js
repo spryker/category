@@ -1,6 +1,6 @@
 /**
  *
- * Spryker alert message manager
+ * Category main entry point
  * @copyright: Spryker Systems GmbH
  *
  */
