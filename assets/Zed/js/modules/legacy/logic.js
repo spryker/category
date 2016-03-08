@@ -1,29 +1,36 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ */
+
 'use strict';
 
 window.serializedList = {};
+
+var categoryHelper = require('./helpers.js');
+
 $(document).ready(function() {
-    var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
 
     $('#root-node-table').on('click', 'tbody.tr', function(){
-        showLoaderBar();
+        categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).children('td:first').text();
-        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('#category-node-tree').on('click', '.category-tree', function(event){
         event.preventDefault();
-        showLoaderBar();
+        categoryHelper.showLoaderBar();
         var idCategoryNode = $(this).attr('id').replace('node-', '');
-        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+        SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('.gui-table-data-category').dataTable({
         "createdRow": function(row, data, index){
             if (triggeredFirstEvent === false) {
-                showLoaderBar();
+                categoryHelper.showLoaderBar();
                 var idCategoryNode = data[0];
-                sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
+                SprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
                 triggeredFirstEvent = true;
             }
         }
@@ -40,7 +47,6 @@ $(document).ready(function() {
     }).on('change', updateOutput);
 
     $('.save-categories-order').click(function(){
-        sprykerAjax.updateCategoryNodesOrder(serializedList);
+        SprykerAjax.updateCategoryNodesOrder(serializedList);
     });
-
 });
