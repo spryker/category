@@ -19,10 +19,10 @@ use Codeception\Scenario;
  *
  * @SuppressWarnings(PHPMD)
  */
-class PresentationTester extends Actor
+class CategoryPresentationTester extends Actor
 {
 
-    use _generated\PresentationTesterActions;
+    use _generated\CategoryPresentationTesterActions;
 
     /**
      * @param \Codeception\Scenario $scenario
