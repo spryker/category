@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -64,6 +64,7 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      *  - Finds all category-node entities for idCategory
+     *  - Category-node entities sorted by node order
      *  - Returns hydrated NodeTransfer collection
      *
      * @api
@@ -351,6 +352,7 @@ interface CategoryFacadeInterface
      * Specification:
      *  - Finds first category-node for idCategory and finds all of its children
      *  - Formats all child category-nodes as a nested array structure
+     *  - Category-node entities sorted by node order
      *  - Returns array representation of sub-tree
      *
      * @api
@@ -424,4 +426,26 @@ interface CategoryFacadeInterface
      */
     public function getSubTreeByIdCategoryNodeAndLocale($idCategoryNode, LocaleTransfer $localeTransfer);
 
+    /**
+     * Specification:
+     * - Retrieve category node path.
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
+
+    /**
+     * Specification:
+     * - Retrieve url to category list.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string;
 }

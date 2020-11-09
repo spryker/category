@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -14,10 +15,10 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Category\Business\CategoryBusinessFactory getFactory()
+ * @method \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface getRepository()
  */
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
-
     /**
      * @api
      *
@@ -579,4 +580,30 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
             ->touchCategoryActive($idCategory);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idNode
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string
+     */
+    public function getNodePath(int $idNode, LocaleTransfer $localeTransfer): string
+    {
+        return $this->getRepository()->getCategoryNodePath($idNode, $localeTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getCategoryListUrl(): string
+    {
+        return $this->getFactory()->getConfig()->getDefaultRedirectUrl();
+    }
 }
