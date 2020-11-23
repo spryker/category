@@ -80,13 +80,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->orderByDepth(Criteria::DESC)
                 ->filterByFkCategoryNodeDescendant($idNode)
                 ->filterByDepth($depth, Criteria::NOT_EQUAL)
-            ->endUse()
-            ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
-            ->endUse()
-            ->setFormatter(new PropelArraySetFormatter());
+                ->endUse()
+                ->useCategoryQuery()
+                ->useAttributeQuery()
+                ->filterByFkLocale($idLocale)
+                ->endUse()
+                ->endUse()
+                ->setFormatter(new PropelArraySetFormatter());
     }
 
     /**
