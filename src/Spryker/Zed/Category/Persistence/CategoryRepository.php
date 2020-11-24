@@ -76,15 +76,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     ): SpyCategoryNodeQuery {
         return $this->getFactory()->createCategoryNodeQuery()
             ->useClosureTableQuery()
-            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-            ->orderByDepth(Criteria::DESC)
-            ->filterByFkCategoryNodeDescendant($idNode)
-            ->filterByDepth($depth, Criteria::NOT_EQUAL)
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+                ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
             ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
-            ->endUse()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse()
             ->setFormatter(new PropelArraySetFormatter());
     }
