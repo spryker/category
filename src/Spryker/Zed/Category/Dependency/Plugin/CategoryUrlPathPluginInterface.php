@@ -8,12 +8,16 @@
 namespace Spryker\Zed\Category\Dependency\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface as ExtensionCategoryUrlPathPluginInterface;
 
-interface CategoryUrlPathPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface} instead.
+ */
+interface CategoryUrlPathPluginInterface extends ExtensionCategoryUrlPathPluginInterface
 {
     /**
      * Specification:
-     * - Update category url paths returned array
+     * - Update category url paths returned array.
      *
      * @api
      *
