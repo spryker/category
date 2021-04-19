@@ -636,4 +636,16 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryTransfer|null
      */
     public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves collection with categories filtered by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
 }
