@@ -145,6 +145,9 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeIds);
             $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
+            if ($categoryTransfer->getIsActive()) {
+                $urlTransfers = $this->addCategoryUrlTransfersIfNeeded($urlTransfers, $categoryTransfer);
+            }
 
             $this->bulkUpdateCategoryNodeUrlsForLocale($categoryNodeIds, $urlTransfers, $categoryTransfer);
         }
@@ -232,7 +235,11 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             }
 
             $urlTransfer->setUrl($categoryUrlPath);
-            $this->urlFacade->updateUrl($urlTransfer);
+            if ($urlTransfer->getIdUrl()) {
+                $this->urlFacade->updateUrl($urlTransfer);
+            } else {
+                $this->urlFacade->createUrl($urlTransfer);
+            }
         }
     }
 
@@ -245,5 +252,34 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     protected function checkUrlLocale(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer): bool
     {
         return $urlTransfer->getFkLocaleOrFail() == $localeTransfer->getIdLocaleOrFail();
+    }
+    
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    protected function addCategoryUrlTransfersIfNeeded(array $urlTransfers, CategoryTransfer $categoryTransfer): array
+    {
+        $localeIdsCategoryUrlExists = [];
+        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            $localeIdsCategoryUrlExists[$categoryLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail()] = false;
+        }
+
+        foreach ($urlTransfers as $urlTransfer) {
+            if ($urlTransfer->getFkResourceCategorynode() == $categoryTransfer->getCategoryNode()->getIdCategoryNodeOrFail()) {
+                $localeIdsCategoryUrlExists[$urlTransfer->getFkLocale()] = true;
+            }
+        }
+
+        foreach ($localeIdsCategoryUrlExists as $localeFk => $urlExist) {
+            if (!$urlExist) {
+                $urlTransfers[] = (new UrlTransfer())->setFkLocale($localeFk)
+                    ->setFkResourceCategorynode($categoryTransfer->getCategoryNode()->getIdCategoryNodeOrFail());
+            }
+        }
+
+        return $urlTransfers;
     }
 }
