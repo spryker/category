@@ -200,7 +200,11 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             }
 
             $urlTransfer->setUrl($urlPath);
-            $this->urlFacade->updateUrl($urlTransfer);
+            if ($urlTransfer->getIdUrl()) {
+                $this->urlFacade->updateUrl($urlTransfer);
+            } else {
+                $this->urlFacade->createUrl($urlTransfer);
+            }
         }
     }
 
