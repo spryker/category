@@ -105,6 +105,13 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             ->addIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
 
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
+        if (empty($urlTransfers) && $categoryTransfer->getIsActive()) {
+            foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+                $urlTransfers[] = (new UrlTransfer())
+                                    ->setFkLocale($categoryLocalizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail())
+                                    ->setFkResourceCategorynode($nodeTransfer->requireIdCategoryNode()->getIdCategoryNode());
+            }
+        }
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
             $this->updateCategoryNodeUrlsForLocale(
