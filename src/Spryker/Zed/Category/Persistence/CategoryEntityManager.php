@@ -403,13 +403,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
             $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
-            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
+            $newParentCategoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth,
             );
 
-            $categoryClosureTableEntity->save();
+            $newParentCategoryClosureTableEntity->save();
         }
     }
 
@@ -471,13 +471,13 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
             $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
-            $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
+            $newParentCategoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
                 $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth,
             );
 
-            $this->persist($categoryClosureTableEntity);
+            $this->persist($newParentCategoryClosureTableEntity);
         }
     }
 
