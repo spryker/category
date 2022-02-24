@@ -98,7 +98,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     public function updateCategoryNodeUrls(CategoryTransfer $categoryTransfer): void
     {
-        $idCategoryNode = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNode();
+        $idCategoryNode = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
 
         $nodeTransfer = (new NodeTransfer())
             ->setIdCategoryNode($idCategoryNode);
