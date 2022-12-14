@@ -648,4 +648,18 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves categories from persistence by criteria.
+     * - Uses `CategoryCriteriaTransfer.pagination.limit` and `CategoryCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `CategoryCollectionTransfer` filled with found categories.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryCollection(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
 }

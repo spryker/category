@@ -75,6 +75,12 @@
         <property name="withNodes" type="bool"/>
         <property name="withChildren" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="Image">

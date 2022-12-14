@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
@@ -256,10 +257,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
+        $categoryQuery = $this->getFactory()->createCategoryQuery();
+
+        $paginationTransfer = $categoryCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $categoryQuery = $this->applyCategoryPagination($categoryQuery, $paginationTransfer);
+        }
+
         return $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryCollection(
-                $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
+                $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer)->find(),
                 new CategoryCollectionTransfer()
             );
     }
@@ -371,5 +379,22 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryClosureTableQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategoryPagination(SpyCategoryQuery $categoryQuery, PaginationTransfer $paginationTransfer): SpyCategoryQuery
+    {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            return $categoryQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $categoryQuery;
     }
 }
