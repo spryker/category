@@ -326,6 +326,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryQuery->filterByIdCategory($categoryCriteriaTransfer->getIdCategory());
         }
 
+        if ($categoryCriteriaTransfer->getIsRoot() !== null) {
+            $categoryQuery
+                ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                ->filterByIsRoot($categoryCriteriaTransfer->getIsRoot())
+                ->endUse();
+        }
+
         if ($categoryCriteriaTransfer->getLocaleName()) {
             $categoryQuery
                 ->useAttributeQuery(null, Criteria::LEFT_JOIN)
