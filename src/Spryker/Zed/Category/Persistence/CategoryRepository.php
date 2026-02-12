@@ -129,7 +129,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryQuery = SpyCategoryQuery::create();
         $spyCategories = $categoryQuery
             ->joinWithAttribute()
-            ->leftJoinNode()
+            ->leftJoinWithNode()
+            ->leftJoinWithSpyCategoryStore()
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $localeTransfer->getIdLocale(),
@@ -163,11 +164,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $categoryCollectionTransfer = new CategoryCollectionTransfer();
         $categoryQuery = $this->getFactory()->createCategoryQuery();
-        $categoryQuery = $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer);
+        $paginationTransfer = $categoryCriteriaTransfer->getPagination();
 
+        if (!$paginationTransfer) {
+            $categoryQuery->leftJoinWithNode()
+                ->leftJoinWithSpyCategoryStore()
+                ->leftjoinWithAttribute();
+        }
+
+        $categoryQuery = $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer);
         $categoryQuery = $this->applyCategorySorting($categoryQuery, $categoryCriteriaTransfer);
 
-        $paginationTransfer = $categoryCriteriaTransfer->getPagination();
         if ($paginationTransfer !== null) {
             $categoryQuery = $this->applyCategoryPagination($categoryQuery, $paginationTransfer);
             $categoryCollectionTransfer->setPagination($paginationTransfer);
@@ -862,7 +869,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionTransfer {
         $categoryCollectionTransfer = new CategoryCollectionTransfer();
-        $categoryQuery = $this->getFactory()->createCategoryQuery();
+        $categoryQuery = $this->getFactory()
+            ->createCategoryQuery()
+            ->leftJoinWithNode()
+            ->leftJoinWithSpyCategoryStore()
+            ->leftjoinWithAttribute();
         $categoryEntities = $this->applyCategoryDeleteFilters($categoryQuery, $categoryCollectionDeleteCriteriaTransfer)->find();
         if (!$categoryEntities->count()) {
             return $categoryCollectionTransfer;
