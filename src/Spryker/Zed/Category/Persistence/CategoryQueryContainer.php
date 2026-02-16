@@ -176,10 +176,10 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             'ascendants.fk_category_node_descendant = node.fk_category_node',
         );
 
-        $where = 'descendants.fk_category_node = ' . $idNode;
         $query
             ->where(
-                $where, /** @phpstan-ignore argument.type */
+                'descendants.fk_category_node = ?',
+                $idNode,
             )
             ->where(
                 'ascendants.fk_category_node IS NULL',
