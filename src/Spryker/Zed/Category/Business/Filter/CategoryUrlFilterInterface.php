@@ -15,7 +15,7 @@ interface CategoryUrlFilterInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer $categoryUrlCollectionResponseTransfer
      *
-     * @return list<\ArrayObject<array-key, \Generated\Shared\Transfer\CategoryTransfer>>
+     * @return array<\ArrayObject<array-key, \Generated\Shared\Transfer\CategoryTransfer>>
      */
     public function filterCategoriesByValidity(
         CategoryUrlCollectionResponseTransfer $categoryUrlCollectionResponseTransfer

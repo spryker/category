@@ -81,7 +81,7 @@ class CategoryLocalizedAttributeExistsCategoryUrlValidatorRule implements Catego
     /**
      * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param list<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      * @param string|int $entityIdentifier
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
@@ -132,7 +132,7 @@ class CategoryLocalizedAttributeExistsCategoryUrlValidatorRule implements Catego
     }
 
     /**
-     * @param list<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      *
      * @return array<string, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>
      */

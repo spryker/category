@@ -10,7 +10,7 @@ namespace Spryker\Zed\Category\Business\Extractor;
 class ErrorExtractor implements ErrorExtractorInterface
 {
     /**
-     * @param list<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param array<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return array<string, string>
      */

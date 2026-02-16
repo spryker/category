@@ -15,7 +15,7 @@ interface CategoryClosureTableFilterInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer $categoryClosureTableCollectionResponseTransfer
      *
-     * @return list<\ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer>>
+     * @return array<\ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer>>
      */
     public function filterCategoryNodesByValidity(
         CategoryClosureTableCollectionResponseTransfer $categoryClosureTableCollectionResponseTransfer

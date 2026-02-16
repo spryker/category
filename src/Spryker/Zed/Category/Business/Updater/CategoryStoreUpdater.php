@@ -26,7 +26,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     use TransactionTrait;
 
     /**
-     * @var \Spryker\Zed\Category\CategoryConfig;
+     * @var \Spryker\Zed\Category\CategoryConfig
      */
     protected $categoryConfig;
 

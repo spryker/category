@@ -43,7 +43,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     protected $urlFacade;
 
     /**
-     * @var \Spryker\Zed\Category\CategoryConfig;
+     * @var \Spryker\Zed\Category\CategoryConfig
      */
     protected $categoryConfig;
 

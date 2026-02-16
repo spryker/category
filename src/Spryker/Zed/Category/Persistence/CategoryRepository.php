@@ -883,9 +883,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param list<int> $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
-     * @return list<int>
+     * @return array<int>
      */
     public function getCategoryNodeIdsWithZeroDepthCategoryClosureTableEntities(array $categoryNodeIds): array
     {
