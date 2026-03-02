@@ -70,11 +70,6 @@ class CategoryReader implements CategoryReaderInterface
         $this->categoryTransferExpanderPlugins = $categoryTransferExpanderPlugins;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
         $categoryTransfer = $this->categoryRepository->findCategoryById($idCategory);
@@ -85,11 +80,6 @@ class CategoryReader implements CategoryReaderInterface
         return $this->executeCategoryTransferExpanderPlugins($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
         $categoryTransfer = $this->categoryRepository->findCategoryByCriteria($categoryCriteriaTransfer);
@@ -110,11 +100,6 @@ class CategoryReader implements CategoryReaderInterface
         return $this->executeCategoryTransferExpanderPlugins($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         $categoryCollectionTransfer = $this->categoryRepository->getAllCategoryCollection($localeTransfer);
@@ -152,11 +137,6 @@ class CategoryReader implements CategoryReaderInterface
         return $groupedCategoryKeys;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     protected function executeCategoryTransferExpanderPlugins(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         foreach ($this->categoryTransferExpanderPlugins as $categoryTransferExpanderPlugin) {

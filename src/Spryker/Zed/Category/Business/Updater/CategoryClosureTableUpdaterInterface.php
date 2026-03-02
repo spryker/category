@@ -13,18 +13,8 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryClosureTableUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function updateCategoryClosureTableParentEntriesForCategoryNode(NodeTransfer $nodeTransfer): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     public function updateCategoryClosureTableCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer;

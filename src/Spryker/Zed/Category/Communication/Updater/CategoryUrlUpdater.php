@@ -15,20 +15,11 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 {
     protected CategoryConfig $categoryConfig;
 
-    /**
-     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
-     */
     public function __construct(CategoryConfig $categoryConfig)
     {
         $this->categoryConfig = $categoryConfig;
     }
 
-    /**
-     * @param array $paths
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     public function updateCategoryUrlPath(array $paths, LocaleTransfer $localeTransfer): array
     {
         $urlLocalizedPrefix = $this->getUrlLocalizedPrefix($localeTransfer);
@@ -42,11 +33,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         return $paths;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     protected function getUrlLocalizedPrefix(LocaleTransfer $localeTransfer): string
     {
         if (!$this->categoryConfig->isFullLocaleNamesInUrlEnabled()) {
@@ -56,11 +42,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         return str_replace('_', '-', strtolower($localeTransfer->getLocaleNameOrFail()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     protected function getLanguageIdentifierFromLocale(LocaleTransfer $localeTransfer): string
     {
         return mb_substr($localeTransfer->getLocaleNameOrFail(), 0, 2);

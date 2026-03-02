@@ -13,12 +13,6 @@ use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 interface CategoryTreeReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodeCollectionTree(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer

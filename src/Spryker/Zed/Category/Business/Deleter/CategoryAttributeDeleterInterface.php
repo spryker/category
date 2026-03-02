@@ -9,10 +9,5 @@ namespace Spryker\Zed\Category\Business\Deleter;
 
 interface CategoryAttributeDeleterInterface
 {
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryLocalizedAttributes(int $idCategory): void;
 }

@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
 
 interface CategoryUrlCollectionCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     public function createCategoryUrlCollection(
         CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
     ): CategoryUrlCollectionResponseTransfer;

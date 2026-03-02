@@ -20,19 +20,11 @@ class CategoryAttributeUpdater implements CategoryAttributeUpdaterInterface
      */
     protected $categoryEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     */
     public function __construct(CategoryEntityManagerInterface $categoryEntityManager)
     {
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategoryAttributes(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -40,11 +32,6 @@ class CategoryAttributeUpdater implements CategoryAttributeUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryAttributesTransaction(CategoryTransfer $categoryTransfer): void
     {
         $idCategory = $categoryTransfer->getIdCategoryOrFail();

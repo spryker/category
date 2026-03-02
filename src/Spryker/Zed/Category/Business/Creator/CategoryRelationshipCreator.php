@@ -69,11 +69,6 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
         $this->categoryRelationUpdatePlugins = $categoryRelationUpdatePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryRelationships(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -81,11 +76,6 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryTemplateSync->syncFromConfig();
@@ -99,11 +89,6 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
         $this->executeCategoryRelationUpdatePlugins($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCategoryRelationUpdatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryRelationUpdatePlugins as $categoryRelationUpdatePlugin) {

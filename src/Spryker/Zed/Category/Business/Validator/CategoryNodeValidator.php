@@ -28,11 +28,6 @@ class CategoryNodeValidator implements CategoryNodeValidatorInterface
         $this->categoryNodeValidatorRules = $categoryNodeValidatorRules;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
-     */
     public function validate(
         CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer
     ): CategoryNodeCollectionResponseTransfer {
@@ -80,12 +75,6 @@ class CategoryNodeValidator implements CategoryNodeValidatorInterface
         return $categoryNodeValidatorRule->isTerminated($initialErrorTransfers, $postValidationErrorTransfers);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $errorCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
-     */
     protected function mergeErrors(
         CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer,
         ErrorCollectionTransfer $errorCollectionTransfer

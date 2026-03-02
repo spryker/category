@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
 
 interface CategoryUrlValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlRequestCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     public function validateCollection(
         CategoryUrlCollectionRequestTransfer $categoryUrlRequestCollectionTransfer
     ): CategoryUrlCollectionResponseTransfer;

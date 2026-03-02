@@ -18,19 +18,11 @@ class StoreRelationCategoryNodeRelationExpander implements CategoryNodeRelationE
      */
     protected CategoryRepositoryInterface $categoryRepository;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $categoryNodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function expandNodeCollectionWithRelations(
         NodeCollectionTransfer $categoryNodeCollectionTransfer
     ): NodeCollectionTransfer {

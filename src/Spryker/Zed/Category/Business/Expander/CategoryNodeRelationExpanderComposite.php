@@ -24,11 +24,6 @@ class CategoryNodeRelationExpanderComposite implements CategoryNodeRelationExpan
         $this->categoryNodeRelationExpanders = $categoryNodeRelationExpanders;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $categoryNodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function expandNodeCollectionWithRelations(
         NodeCollectionTransfer $categoryNodeCollectionTransfer
     ): NodeCollectionTransfer {

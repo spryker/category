@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryStoreCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryStoreRelations(CategoryTransfer $categoryTransfer): void;
 }

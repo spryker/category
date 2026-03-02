@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
 
 interface CategoryUrlCollectionUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     public function updateCategoryUrlCollection(
         CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
     ): CategoryUrlCollectionResponseTransfer;

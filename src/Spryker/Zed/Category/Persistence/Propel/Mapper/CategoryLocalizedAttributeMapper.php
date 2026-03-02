@@ -14,12 +14,6 @@ use Propel\Runtime\Collection\Collection;
 
 class CategoryLocalizedAttributeMapper
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttribute
-     */
     public function mapCategoryLocalizedAttributeTransferToCategoryAttributeEntity(
         CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer,
         SpyCategoryAttribute $categoryAttributeEntity
@@ -49,12 +43,6 @@ class CategoryLocalizedAttributeMapper
         return $categoryLocalizedAttributesTransfers;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
     protected function mapCategoryAttributeEntityToCategoryLocalizedAttributesTransfer(
         SpyCategoryAttribute $categoryAttributeEntity,
         CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer

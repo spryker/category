@@ -12,11 +12,5 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryHydratorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
     public function hydrateCategoryCollection(CategoryCollectionTransfer $categoryCollectionTransfer, LocaleTransfer $localeTransfer): void;
 }

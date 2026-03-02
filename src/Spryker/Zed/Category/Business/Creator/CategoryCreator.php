@@ -87,11 +87,6 @@ class CategoryCreator implements CategoryCreatorInterface
         $this->categoryPostCreatePlugins = $categoryPostCreatePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategory(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer): void {
@@ -99,11 +94,6 @@ class CategoryCreator implements CategoryCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateCategoryTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_BEFORE_CREATE, $categoryTransfer);
@@ -115,11 +105,6 @@ class CategoryCreator implements CategoryCreatorInterface
         $this->executePostCreatePlugins($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function triggerAfterCreateEvents(CategoryTransfer $categoryTransfer): void
     {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
@@ -130,11 +115,6 @@ class CategoryCreator implements CategoryCreatorInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executePostCreatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryPostCreatePlugins as $categoryPostCreatePlugin) {
@@ -142,11 +122,6 @@ class CategoryCreator implements CategoryCreatorInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function createCategoryCollection(
         CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
     ): CategoryCollectionResponseTransfer {
@@ -168,11 +143,6 @@ class CategoryCreator implements CategoryCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function filterInvalidCategories(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
     ): CategoryCollectionResponseTransfer {
@@ -191,11 +161,6 @@ class CategoryCreator implements CategoryCreatorInterface
         return $categoryCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function executeCreateCategoryCollectionTransaction(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
     ): CategoryCollectionResponseTransfer {

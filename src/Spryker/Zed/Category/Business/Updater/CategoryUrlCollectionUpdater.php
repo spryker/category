@@ -33,11 +33,6 @@ class CategoryUrlCollectionUpdater implements CategoryUrlCollectionUpdaterInterf
      */
     protected CategoryUrlFilterInterface $categoryUrlFilter;
 
-    /**
-     * @param \Spryker\Zed\Category\Business\Updater\CategoryUrlUpdaterInterface $categoryUrlUpdater
-     * @param \Spryker\Zed\Category\Business\Validator\CategoryUrlValidatorInterface $categoryUrlValidator
-     * @param \Spryker\Zed\Category\Business\Filter\CategoryUrlFilterInterface $categoryUrlFilter
-     */
     public function __construct(
         CategoryUrlUpdaterInterface $categoryUrlUpdater,
         CategoryUrlValidatorInterface $categoryUrlValidator,
@@ -48,11 +43,6 @@ class CategoryUrlCollectionUpdater implements CategoryUrlCollectionUpdaterInterf
         $this->categoryUrlFilter = $categoryUrlFilter;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     public function updateCategoryUrlCollection(
         CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
     ): CategoryUrlCollectionResponseTransfer {
@@ -85,11 +75,6 @@ class CategoryUrlCollectionUpdater implements CategoryUrlCollectionUpdaterInterf
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
-     *
-     * @return void
-     */
     protected function assertCategoryUrlCollectionRequiredFields(
         CategoryUrlCollectionRequestTransfer $categoryUrlCollectionRequestTransfer
     ): void {

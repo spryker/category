@@ -60,13 +60,6 @@ class CategoryTree implements CategoryTreeInterface
      */
     protected $categoryToucher;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\CategoryFacadeInterface $categoryFacade
-     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
-     */
     public function __construct(
         CategoryQueryContainerInterface $queryContainer,
         CategoryEntityManagerInterface $categoryEntityManager,
@@ -145,12 +138,6 @@ class CategoryTree implements CategoryTreeInterface
         return count($firstLevelChildNodeCollection);
     }
 
-    /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
     protected function deleteNodeById(int $idCategoryNode, int $idChildrenDestinationNode): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategoryNode, $idChildrenDestinationNode) {
@@ -158,12 +145,6 @@ class CategoryTree implements CategoryTreeInterface
         });
     }
 
-    /**
-     * @param int $idCategoryNode
-     * @param int $idChildrenDestinationNode
-     *
-     * @return void
-     */
     protected function executeDeleteNodeByIdTransaction(int $idCategoryNode, int $idChildrenDestinationNode): void
     {
         $nodeTransfer = (new NodeTransfer())->setIdCategoryNode($idCategoryNode);
@@ -171,12 +152,6 @@ class CategoryTree implements CategoryTreeInterface
         $this->deleteNode($nodeTransfer, $idChildrenDestinationNode);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param int|null $idDestinationCategoryNode
-     *
-     * @return void
-     */
     protected function deleteNode(NodeTransfer $nodeTransfer, ?int $idDestinationCategoryNode = null): void
     {
         do {
@@ -194,12 +169,6 @@ class CategoryTree implements CategoryTreeInterface
         $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryTransfer $destinationCategoryTransfer
-     *
-     * @return void
-     */
     protected function moveMainCategoryNodeSubTree(
         CategoryTransfer $categoryTransfer,
         CategoryTransfer $destinationCategoryTransfer

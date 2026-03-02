@@ -62,11 +62,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
         $this->categoryUrlPathPlugins = $categoryUrlPathPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryUrl(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -87,11 +82,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
@@ -137,12 +127,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
     protected function createUrlTransfer(LocaleTransfer $localeTransfer, NodeTransfer $categoryNodeTransfer): UrlTransfer
     {
         return (new UrlTransfer())
@@ -151,12 +135,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
             ->setUrl($this->buildUrl($categoryNodeTransfer, $localeTransfer));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     protected function buildUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer): string
     {
         $pathParts = $this->getUrlPathPartsForCategoryNode($categoryNodeTransfer, $localeTransfer);
@@ -164,12 +142,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
         return $this->urlPathGenerator->generate($pathParts);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): array
     {
         $categoryNodeUrlPathCriteriaTransfer = (new CategoryNodeUrlPathCriteriaTransfer())
@@ -182,12 +154,6 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
         return $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
     }
 
-    /**
-     * @param array $categoryUrlPathParts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     protected function executeCategoryUrlPathPlugins(array $categoryUrlPathParts, LocaleTransfer $localeTransfer): array
     {
         foreach ($this->categoryUrlPathPlugins as $categoryUrlPathPlugin) {

@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 class CategoryIdentifierBuilder implements CategoryIdentifierBuilderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return string
-     */
     public function buildIdentifier(CategoryTransfer $categoryTransfer): string
     {
         return $categoryTransfer->getIdCategory() !== null ? (string)$categoryTransfer->getIdCategory() : spl_object_hash($categoryTransfer);

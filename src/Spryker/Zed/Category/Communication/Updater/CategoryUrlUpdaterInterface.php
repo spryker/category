@@ -11,11 +11,5 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryUrlUpdaterInterface
 {
-    /**
-     * @param array $paths
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     public function updateCategoryUrlPath(array $paths, LocaleTransfer $localeTransfer): array;
 }

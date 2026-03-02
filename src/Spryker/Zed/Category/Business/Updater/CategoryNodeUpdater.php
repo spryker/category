@@ -59,15 +59,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
      */
     protected $categoryNodeCreator;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Updater\CategoryClosureTableUpdaterInterface $categoryClosureTableUpdater
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
-     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
-     * @param \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface $categoryNodeDeleter
-     * @param \Spryker\Zed\Category\Business\Creator\CategoryNodeCreatorInterface $categoryNodeCreator
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryEntityManagerInterface $categoryEntityManager,
@@ -86,11 +77,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryNodeCreator = $categoryNodeCreator;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategoryNode(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -98,11 +84,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateExtraParentCategoryNodes(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -127,11 +108,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryEntityManager->updateCategoryNode($nodeTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryNodeTransaction(CategoryTransfer $categoryTransfer): void
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
@@ -165,11 +141,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForUpdate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateExtraParentCategoryNodesTransaction(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
@@ -202,12 +173,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->removeDeassignedExtraParents($existingExtraParentCategoryNodeTransferCollection, $extraParentCategoryNodeIdsToDelete);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $currentCategoryNodeTransfer
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return int|null
-     */
     protected function findPossibleFormerParentCategoryNodeId(
         NodeTransfer $currentCategoryNodeTransfer,
         CategoryTransfer $categoryTransfer
@@ -230,12 +195,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
-     *
-     * @return void
-     */
     protected function touchCategoryNode(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer): void
     {
         $idCategoryNode = $categoryNodeTransfer->getIdCategoryNodeOrFail();
@@ -249,11 +208,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         $this->categoryToucher->touchCategoryNodeDeletedRecursively($idCategoryNode);
     }
 
-    /**
-     * @param int|null $idCategoryNode
-     *
-     * @return void
-     */
     protected function touchPossibleFormerParentCategoryNode(?int $idCategoryNode): void
     {
         if (!$idCategoryNode) {
@@ -275,12 +229,6 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         }, $nodeTransfers->getArrayCopy());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $existingExtraParentNodeTransferCollection
-     * @param \Generated\Shared\Transfer\NodeTransfer $newExtraParentNodeTransfer
-     *
-     * @return void
-     */
     protected function updateExistingExtraParentCategoryNode(
         NodeCollectionTransfer $existingExtraParentNodeTransferCollection,
         NodeTransfer $newExtraParentNodeTransfer

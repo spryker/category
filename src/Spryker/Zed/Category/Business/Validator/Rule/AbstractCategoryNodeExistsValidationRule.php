@@ -35,10 +35,6 @@ abstract class AbstractCategoryNodeExistsValidationRule
      */
     protected ErrorAdderInterface $errorAdder;
 
-    /**
-     * @param \Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface $categoryNodeReader
-     * @param \Spryker\Zed\Category\Business\Validator\Util\ErrorAdderInterface $errorAdder
-     */
     public function __construct(
         CategoryNodeReaderInterface $categoryNodeReader,
         ErrorAdderInterface $errorAdder

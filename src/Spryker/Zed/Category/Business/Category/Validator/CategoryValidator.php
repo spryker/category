@@ -36,11 +36,6 @@ class CategoryValidator implements CategoryValidatorInterface
         $this->identifierBuilder = $identifierBuilder;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function validateCollection(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
     ): CategoryCollectionResponseTransfer {
@@ -51,12 +46,6 @@ class CategoryValidator implements CategoryValidatorInterface
         return $categoryCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function validate(
         CategoryTransfer $categoryTransfer,
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
@@ -64,12 +53,6 @@ class CategoryValidator implements CategoryValidatorInterface
         return $this->executeValidatorRules($categoryTransfer, $categoryCollectionResponseTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function executeValidatorRules(
         CategoryTransfer $categoryTransfer,
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer

@@ -27,11 +27,6 @@ class CategoryUrlValidator implements CategoryUrlValidatorInterface
         $this->categoryUrlValidatorRules = $categoryUrlValidatorRules;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer $categoryUrlRequestCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     public function validateCollection(CategoryUrlCollectionRequestTransfer $categoryUrlRequestCollectionTransfer): CategoryUrlCollectionResponseTransfer
     {
         $categoryTransfers = $categoryUrlRequestCollectionTransfer->getCategories();
@@ -60,12 +55,6 @@ class CategoryUrlValidator implements CategoryUrlValidatorInterface
         return $categoryUrlCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer $categoryUrlCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $postValidationErrorCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer
-     */
     protected function mergeErrors(
         CategoryUrlCollectionResponseTransfer $categoryUrlCollectionResponseTransfer,
         ErrorCollectionTransfer $postValidationErrorCollectionTransfer

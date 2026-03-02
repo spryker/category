@@ -16,19 +16,11 @@ class CategoryClosureTableDeleter implements CategoryClosureTableDeleterInterfac
      */
     protected $categoryEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     */
     public function __construct(CategoryEntityManagerInterface $categoryEntityManager)
     {
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function deleteCategoryClosureTable(int $idCategoryNode): void
     {
         $this->categoryEntityManager->deleteCategoryClosureTable($idCategoryNode);

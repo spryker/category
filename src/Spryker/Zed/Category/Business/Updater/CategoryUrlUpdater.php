@@ -52,13 +52,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected $categoryUrlCreator;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
-     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
-     * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         UrlPathGeneratorInterface $urlPathGenerator,
@@ -73,11 +66,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         $this->categoryUrlCreator = $categoryUrlCreator;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategoryUrl(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -85,11 +73,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodeChildCount = $this->categoryRepository->getCategoryNodeChildCountByParentNodeId($categoryTransfer);
@@ -103,11 +86,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         $this->bulkUpdateCategoryNodeUrls($categoryTransfer, $categoryNodeChildCount);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategoryNodeUrls(CategoryTransfer $categoryTransfer): void
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
@@ -128,12 +106,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         $this->createCategoryNodeUrlsForNewLocalizedAttributes($categoryTransfer, $urlTransfers, $nodeTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int $categoryNodeChildCount
-     *
-     * @return void
-     */
     protected function bulkUpdateCategoryNodeUrls(CategoryTransfer $categoryTransfer, int $categoryNodeChildCount): void
     {
         $categoryNodeUrlCriteriaTransfer = new CategoryNodeUrlCriteriaTransfer();
@@ -302,12 +274,6 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         return false;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return bool
-     */
     protected function checkUrlLocale(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer): bool
     {
         return $urlTransfer->getFkLocaleOrFail() == $localeTransfer->getIdLocaleOrFail();

@@ -90,9 +90,6 @@ class CategoryCrudFacadeTest extends Unit
         $this->tester->assertCategoryCollectionContainsTransferWithId($categoryCollectionTransfer, $categoryTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateCategoryCollectionReturnsCollectionWithOneCategoryEntityWhenEntityWasSaved(): void
     {
         // Arrange
@@ -186,9 +183,6 @@ class CategoryCrudFacadeTest extends Unit
         $this->tester->assertCategoryCollectionResponseContainsFailedValidationRuleError($categoryCollectionResponseTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryCollectionReturnsCollectionWithOneCategoryEntityWhenEntityWasSaved(): void
     {
         // Arrange

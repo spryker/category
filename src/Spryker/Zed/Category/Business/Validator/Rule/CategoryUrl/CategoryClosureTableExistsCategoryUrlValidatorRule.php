@@ -34,10 +34,6 @@ class CategoryClosureTableExistsCategoryUrlValidatorRule implements CategoryUrlV
      */
     protected ErrorAdderInterface $errorAdder;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Business\Validator\Util\ErrorAdderInterface $errorAdder
-     */
     public function __construct(CategoryRepositoryInterface $categoryRepository, ErrorAdderInterface $errorAdder)
     {
         $this->categoryRepository = $categoryRepository;

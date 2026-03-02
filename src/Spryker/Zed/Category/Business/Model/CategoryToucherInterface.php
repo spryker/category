@@ -37,11 +37,6 @@ interface CategoryToucherInterface
      */
     public function touchCategoryNodeDeleted($idCategoryNode);
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function touchCategoryActive(int $idCategory): void;
 
     /**

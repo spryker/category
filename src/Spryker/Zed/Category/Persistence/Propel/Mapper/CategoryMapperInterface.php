@@ -18,20 +18,8 @@ use Propel\Runtime\Collection\Collection;
 
 interface CategoryMapperInterface
 {
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function mapCategory(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer;
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $spyCategory
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
@@ -58,27 +46,9 @@ interface CategoryMapperInterface
         NodeCollectionTransfer $nodeCollectionTransfer
     ): NodeCollectionTransfer;
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function mapCategoryNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
     public function mapCategoryTransferToCategoryEntity(CategoryTransfer $categoryTransfer, SpyCategory $categoryEntity): SpyCategory;
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer;
 }

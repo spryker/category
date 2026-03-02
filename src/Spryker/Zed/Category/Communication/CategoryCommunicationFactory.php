@@ -20,9 +20,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class CategoryCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\Category\Communication\Updater\CategoryUrlUpdaterInterface
-     */
     public function createCategoryUrlUpdater(): CategoryUrlUpdaterInterface
     {
         return new CategoryUrlUpdater(

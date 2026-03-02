@@ -22,31 +22,16 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
         $this->touchFacade = $touchFacade;
     }
 
-    /**
-     * @param string $itemType
-     * @param int $itemId
-     *
-     * @return bool
-     */
     public function touchActive(string $itemType, int $itemId): bool
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
 
-    /**
-     * @param string $itemType
-     * @param int $itemId
-     *
-     * @return bool
-     */
     public function touchDeleted(string $itemType, int $itemId): bool
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
 
-    /**
-     * @return bool
-     */
     public function isTouchEnabled(): bool
     {
         return $this->touchFacade->isTouchEnabled();

@@ -9,18 +9,8 @@ namespace Spryker\Zed\Category\Business\Deleter;
 
 interface CategoryNodeDeleterInterface
 {
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryNodesForCategory(int $idCategory): void;
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryExtraParentNodesForCategory(int $idCategory): void;
 
     /**

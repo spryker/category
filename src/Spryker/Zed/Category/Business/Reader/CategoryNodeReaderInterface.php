@@ -19,20 +19,10 @@ interface CategoryNodeReaderInterface
      */
     public function getAllNodesByIdCategory(int $idCategory): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodeCollection(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer;

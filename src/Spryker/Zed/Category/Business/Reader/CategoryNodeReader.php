@@ -24,10 +24,6 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
      */
     protected CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander
@@ -52,11 +48,6 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
             ->getArrayCopy();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer {
@@ -66,11 +57,6 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
         return $categoryNodeCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodeCollection(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer {

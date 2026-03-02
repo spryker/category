@@ -43,13 +43,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
      */
     protected $categoryToucher;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
-     * @param \Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreatorInterface $categoryClosureTableCreator
-     * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
-     */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryNodePublisherInterface $categoryNodePublisher,
@@ -64,11 +57,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryToucher = $categoryToucher;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryNode(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -76,11 +64,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createExtraParentsCategoryNodes(CategoryTransfer $categoryTransfer): void
     {
         if ($categoryTransfer->getExtraParents()->count() === 0) {
@@ -92,12 +75,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return void
-     */
     public function addExtraParentCategoryNodeToCategory(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer, $extraParentNodeTransfer) {
@@ -105,11 +82,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateCategoryNodeTransaction(CategoryTransfer $categoryTransfer): void
     {
         $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail()
@@ -129,11 +101,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryNodePublisher->triggerBulkCategoryNodePublishEventForCreate($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateExtraParentsCategoryNodesTransaction(CategoryTransfer $categoryTransfer): void
     {
         foreach ($categoryTransfer->getExtraParents() as $extraParentNodeTransfer) {
@@ -141,12 +108,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return void
-     */
     protected function assignExtraParent(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): void
     {
         $nodeTransfer = $this->categoryEntityManager->saveCategoryExtraParentNode($categoryTransfer, $extraParentNodeTransfer);
@@ -157,12 +118,6 @@ class CategoryNodeCreator implements CategoryNodeCreatorInterface
         $this->categoryToucher->touchCategoryNodeActiveRecursively($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     protected function setParentCategoryNode(NodeTransfer $nodeTransfer, CategoryTransfer $categoryTransfer): NodeTransfer
     {
         $parentCategoryNode = $categoryTransfer->getParentCategoryNode();

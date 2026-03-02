@@ -38,9 +38,6 @@ class GetCategoryCollectionTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionChecksCategoryProperties(): void
     {
         // Arrange
@@ -67,9 +64,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertNotEmpty($persistedCategory->getLocalizedAttributes());
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionFiltersMainCategory(): void
     {
         // Arrange
@@ -88,9 +82,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertCount(1, $categoryTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionFiltersCategoriesByLocaleName(): void
     {
         // Arrange
@@ -116,9 +107,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertCount(1, $categoryTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionFiltersCategoriesByLocaleId(): void
     {
         // Arrange
@@ -144,9 +132,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertCount(1, $categoryTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionFiltersCategoriesByCategoryNodeId(): void
     {
         // Arrange
@@ -164,9 +149,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertCount(1, $categoryTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionFiltersCategoriesByCategoryKey(): void
     {
         // Arrange
@@ -188,9 +170,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertSame($expectedCategoryTransfer->getCategoryKey(), $categoryTransfers->offsetGet(0)->getCategoryKey());
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionReturnsEmptyCollectionWhileNoCriteriaMatched(): void
     {
         // Arrange
@@ -207,9 +186,6 @@ class GetCategoryCollectionTest extends Unit
         $this->assertCount(0, $categoryCollectionTransfer->getCategories());
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionReturnsCollectionWithOneCategoryWhileAllCriteriasMatched(): void
     {
         // Arrange
@@ -248,9 +224,6 @@ class GetCategoryCollectionTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryCollectionReturnsCollectionWithFiveGetCategoriesWhileHavingLimitOffsetPaginationApplied(): void
     {
         // Arrange

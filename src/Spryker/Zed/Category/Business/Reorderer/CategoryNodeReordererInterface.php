@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 
 interface CategoryNodeReordererInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
-     */
     public function reorderCategoryNodeCollection(
         CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
     ): CategoryNodeCollectionResponseTransfer;

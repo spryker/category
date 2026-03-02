@@ -50,13 +50,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      */
     protected $eventFacade;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Reader\CategoryReaderInterface $categoryReader
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryEntityManagerInterface $categoryEntityManager,
@@ -71,11 +64,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         $this->categoryConfig = $categoryConfig;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
-     *
-     * @return void
-     */
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
         UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void {
@@ -84,11 +72,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryStoreRelationWithMainChildrenPropagationTransaction(
         UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void {
@@ -213,11 +196,6 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         $this->categoryEntityManager->bulkDeleteCategoryStoreRelationForStores($categoryIds, $storeIdsToDelete);
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     protected function triggerCategoryTreePublishEvent(int $idCategory): void
     {
         $this->eventFacade->trigger(

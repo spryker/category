@@ -41,12 +41,6 @@ class CategoryDeleter implements CategoryDeleterInterface
      */
     protected CategoryToEventFacadeInterface $eventFacade;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface $categoryRelationshipDeleter
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryRepositoryInterface $categoryRepository,
@@ -59,11 +53,6 @@ class CategoryDeleter implements CategoryDeleterInterface
         $this->eventFacade = $eventFacade;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategory(int $idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
@@ -71,11 +60,6 @@ class CategoryDeleter implements CategoryDeleterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function deleteCategoryCollection(
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionResponseTransfer {
@@ -84,11 +68,6 @@ class CategoryDeleter implements CategoryDeleterInterface
         });
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     protected function executeDeleteCategoryTransaction(int $idCategory): void
     {
         $categoryTransfer = (new CategoryTransfer())
@@ -102,11 +81,6 @@ class CategoryDeleter implements CategoryDeleterInterface
         $this->triggerAfterDeleteEvents($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function triggerAfterDeleteEvents(CategoryTransfer $categoryTransfer): void
     {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_DELETE, $categoryTransfer);
@@ -117,11 +91,6 @@ class CategoryDeleter implements CategoryDeleterInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function executeDeleteCategoryCollectionTransaction(
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionResponseTransfer {

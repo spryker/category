@@ -35,11 +35,6 @@ class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterfac
      */
     protected CategoryClosureTableFilterInterface $categoryClosureTableFilter;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidatorInterface $categoryClosureTableValidator
-     * @param \Spryker\Zed\Category\Business\Filter\CategoryClosureTableFilterInterface $categoryClosureTableFilter
-     */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryClosureTableValidatorInterface $categoryClosureTableValidator,
@@ -50,11 +45,6 @@ class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterfac
         $this->categoryClosureTableFilter = $categoryClosureTableFilter;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function createCategoryClosureTable(NodeTransfer $nodeTransfer): void
     {
         if (!$nodeTransfer->getFkParentCategoryNode()) {
@@ -66,11 +56,6 @@ class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterfac
         $this->categoryEntityManager->createCategoryClosureTableNodes($nodeTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     public function createCategoryClosureTableCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer {
@@ -109,11 +94,6 @@ class CategoryClosureTableCreator implements CategoryClosureTableCreatorInterfac
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return void
-     */
     protected function assertCategoryClosureTableCollectionRequiredFields(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): void {

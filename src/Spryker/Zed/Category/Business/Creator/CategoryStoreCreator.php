@@ -23,10 +23,6 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
      */
     protected $categoryEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryEntityManagerInterface $categoryEntityManager
@@ -35,11 +31,6 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryStoreRelations(CategoryTransfer $categoryTransfer): void
     {
         if (!$categoryTransfer->getStoreRelation() || count($categoryTransfer->getStoreRelation()->getIdStores()) === 0) {

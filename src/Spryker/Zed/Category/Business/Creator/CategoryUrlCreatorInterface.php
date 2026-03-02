@@ -13,11 +13,6 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface CategoryUrlCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryUrl(CategoryTransfer $categoryTransfer): void;
 
     /**

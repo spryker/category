@@ -27,10 +27,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
      */
     protected $urlFacade;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryToUrlInterface $urlFacade
@@ -39,11 +35,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         $this->urlFacade = $urlFacade;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryUrlsForCategory(int $idCategory): void
     {
         $categoryNodeIds = $this->getCategoryNodeIdsForCategory($idCategory);
@@ -59,11 +50,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         });
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function deleteCategoryUrlsForCategoryNode(int $idCategoryNode): void
     {
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
@@ -94,11 +80,6 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
         return $categoryNodeIds;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteUrlsByCategoryNodeUrlTransaction(
         CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
     ): void {

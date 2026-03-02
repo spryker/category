@@ -24,10 +24,6 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
      */
     protected $eventFacade;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryToEventFacadeInterface $eventFacade
@@ -36,11 +32,6 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
         $this->eventFacade = $eventFacade;
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function triggerBulkCategoryNodePublishEventForCreate(int $idCategoryNode): void
     {
         $categoryNodeIdsToTrigger = array_unique($this->categoryRepository->getParentCategoryNodeIdsByCategoryNodeId($idCategoryNode));
@@ -48,11 +39,6 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
         $this->triggerBulk($categoryNodeIdsToTrigger);
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function triggerBulkCategoryNodePublishEventForUpdate(int $idCategoryNode): void
     {
         $categoryNodeIdsToTrigger = array_unique(

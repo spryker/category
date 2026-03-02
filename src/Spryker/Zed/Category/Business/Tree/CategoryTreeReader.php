@@ -20,20 +20,11 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      */
     protected $categoryRepository;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodeCollectionTree(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer

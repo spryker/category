@@ -31,12 +31,6 @@ class CategoryNodeMapper
         return $nodeCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNode
-     */
     public function mapNodeTransferToCategoryNodeEntity(NodeTransfer $nodeTransfer, SpyCategoryNode $categoryNodeEntity): SpyCategoryNode
     {
         $categoryNodeEntity->fromArray($nodeTransfer->modifiedToArray());
@@ -44,23 +38,11 @@ class CategoryNodeMapper
         return $categoryNodeEntity;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $spyCategoryNode
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function mapCategoryNode(SpyCategoryNode $spyCategoryNode, NodeTransfer $nodeTransfer): NodeTransfer
     {
         return $nodeTransfer->fromArray($spyCategoryNode->toArray(), true);
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function mapCategoryNodes(SpyCategory $categoryEntity, CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         foreach ($categoryEntity->getNodes() as $categoryNodeEntity) {

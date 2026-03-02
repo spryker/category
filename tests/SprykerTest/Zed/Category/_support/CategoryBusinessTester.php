@@ -49,11 +49,6 @@ class CategoryBusinessTester extends Actor
         'de_DE',
     ];
 
-    /**
-     * @param int $idCategory
-     *
-     * @return int
-     */
     public function getStoresCountByIdCategory(int $idCategory): int
     {
         return $this->getCategoryStoreTableQuery()
@@ -61,13 +56,6 @@ class CategoryBusinessTester extends Actor
             ->count();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int $idCategory
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
     public function createCategoryLocalizedAttributesForLocale(
         LocaleTransfer $localeTransfer,
         int $idCategory,
@@ -110,12 +98,6 @@ class CategoryBusinessTester extends Actor
         return $categoryTransfers;
     }
 
-    /**
-     * @param int $idCategoryNode
-     * @param int $idCategoryNodeDescendant
-     *
-     * @return int|null
-     */
     public function findCategoryClosureTableDepth(int $idCategoryNode, int $idCategoryNodeDescendant): ?int
     {
         return $this->getCategoryClosureTableQuery()
@@ -125,9 +107,6 @@ class CategoryBusinessTester extends Actor
             ->findOne();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function createCategoryTransferWithLocalizedAttributes(): CategoryTransfer
     {
         $categoryTransfer = $this->haveCategory();
@@ -163,11 +142,6 @@ class CategoryBusinessTester extends Actor
             ->getData();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
     public function createCategoryLocalizedAttributesTransferForLocale(LocaleTransfer $localeTransfer): CategoryLocalizedAttributesTransfer
     {
         return (new CategoryLocalizedAttributesBuilder([
@@ -202,17 +176,11 @@ class CategoryBusinessTester extends Actor
         return $categoryTransfer;
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
     protected function getCategoryClosureTableQuery(): SpyCategoryClosureTableQuery
     {
         return SpyCategoryClosureTableQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryStoreQuery
-     */
     protected function getCategoryStoreTableQuery(): SpyCategoryStoreQuery
     {
         return SpyCategoryStoreQuery::create();

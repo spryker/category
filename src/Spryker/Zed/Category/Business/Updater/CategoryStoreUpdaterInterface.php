@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 
 interface CategoryStoreUpdaterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
-     *
-     * @return void
-     */
     public function updateCategoryStoreRelationWithMainChildrenPropagation(
         UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
     ): void;

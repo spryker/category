@@ -60,11 +60,6 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
         $this->categoryRelationDeletePlugins = $categoryRelationDeletePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function deleteCategoryRelationships(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -72,11 +67,6 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $idCategory = $categoryTransfer->getIdCategoryOrFail();
@@ -90,11 +80,6 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
         $this->executeCategoryRelationDeletePlugins($idCategory);
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     protected function executeCategoryRelationDeletePlugins(int $idCategory): void
     {
         foreach ($this->categoryRelationDeletePlugins as $categoryRelationDeletePlugin) {

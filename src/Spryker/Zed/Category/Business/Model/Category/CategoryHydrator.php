@@ -19,20 +19,11 @@ class CategoryHydrator implements CategoryHydratorInterface
      */
     protected $categoryRepository;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
     public function hydrateCategoryCollection(CategoryCollectionTransfer $categoryCollectionTransfer, LocaleTransfer $localeTransfer): void
     {
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {

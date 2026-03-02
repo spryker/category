@@ -119,11 +119,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     protected const DEPTH_WITH_CHILDREN_RELATIONS = 1;
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         $categoryQuery = SpyCategoryQuery::create();
@@ -155,11 +150,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->getCategoryCollection($categoryCriteriaTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
     public function getCategoryCollection(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
         $categoryCollectionTransfer = new CategoryCollectionTransfer();
@@ -206,12 +196,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->generateNodePathString($nodePathQuery, static::NODE_PATH_GLUE);
     }
 
-    /**
-     * @param int $idNode
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string
     {
         $nodePathQuery = $this->queryNodePathWithoutRootNode(
@@ -223,12 +207,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->generateNodePathString($nodePathQuery, static::CATEGORY_NODE_PATH_GLUE);
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $nodePathQuery
-     * @param string $glue
-     *
-     * @return string
-     */
     protected function generateNodePathString(SpyCategoryNodeQuery $nodePathQuery, string $glue): string
     {
         $nodePathQuery = $nodePathQuery
@@ -241,13 +219,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return implode($glue, $pathTokens);
     }
 
-    /**
-     * @param int $idNode
-     * @param int $idLocale
-     * @param int|null $depth
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function queryNodePathWithRootNode(
         int $idNode,
         int $idLocale,
@@ -271,13 +242,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeQuery;
     }
 
-    /**
-     * @param int $idNode
-     * @param int $idLocale
-     * @param int|null $depth
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function queryNodePathWithoutRootNode(
         int $idNode,
         int $idLocale,
@@ -287,12 +251,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->filterByIsRoot((string)static::IS_NOT_ROOT_NODE);
     }
 
-    /**
-     * @param string $nodeName
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return bool
-     */
     public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool
     {
         $categoryNodeQuery = $this->getFactory()->createCategoryNodeQuery();
@@ -309,11 +267,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeQuery->exists();
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategoryById(int $idCategory): ?CategoryTransfer
     {
         $spyCategoryEntity = $this->getFactory()
@@ -361,11 +314,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->getData();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategoryByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer
     {
         $categoryQuery = $this->getFactory()->createCategoryQuery();
@@ -381,11 +329,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->mapCategoryWithRelations($categoryEntity, new CategoryTransfer());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return int
-     */
     public function getCategoryNodeChildCountByParentNodeId(CategoryTransfer $categoryTransfer): int
     {
         return $this->getFactory()
@@ -529,11 +472,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $urlTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
-     *
-     * @return array
-     */
     public function getCategoryNodeUrlPathParts(CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer): array
     {
         $depth = $categoryNodeUrlPathCriteriaTransfer->getOnlyParents() ? 0 : null;
@@ -567,11 +505,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $nodeCollection->toArray();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
-     *
-     * @return array
-     */
     public function getBulkCategoryNodeUrlPathParts(
         CategoryNodeUrlPathCriteriaTransfer $categoryNodeUrlPathCriteriaTransfer
     ): array {
@@ -615,11 +548,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeCollection->toArray();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer {
@@ -806,11 +734,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeQuery;
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
     public function getCategoryStoreRelationByIdCategoryNode(int $idCategoryNode): StoreRelationTransfer
     {
         $storeRelationTransfer = new StoreRelationTransfer();
@@ -839,11 +762,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             );
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer|null
-     */
     public function findCategoryNodeByIdCategoryNode(int $idCategoryNode): ?NodeTransfer
     {
         $categoryNodeEntity = $this->getFactory()
@@ -860,11 +778,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
     public function getCategoryDeleteCollection(
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionTransfer {
@@ -898,12 +811,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->getData();
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function applyCategoryFilters(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
     {
         if ($categoryCriteriaTransfer->getCategoryConditions() === null) {
@@ -966,12 +873,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery $categoryClosureTableQuery
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
     protected function applyCategoryClosureTableFilters(
         SpyCategoryClosureTableQuery $categoryClosureTableQuery,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
@@ -1004,12 +905,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryClosureTableQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function applyParentCategoryNodeFilter(SpyCategoryNodeQuery $categoryNodeQuery, CategoryTransfer $categoryTransfer): SpyCategoryNodeQuery
     {
         $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNode();
@@ -1026,12 +921,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
     protected function buildCategoryClosureTableQueryByIdCategory(
         CategoryTransfer $categoryTransfer,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
@@ -1090,12 +979,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryNodeCollection->toArray();
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery
-     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function applyAscendantCategoryKeyFilters(
         SpyCategoryNodeQuery $categoryNodeQuery,
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
@@ -1146,12 +1029,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return array_unique($relatedCategoryNodesIds);
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function applyCategoryPagination(SpyCategoryQuery $categoryQuery, PaginationTransfer $paginationTransfer): SpyCategoryQuery
     {
         $paginationTransfer->setNbResults($categoryQuery->count());
@@ -1164,12 +1041,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function applyCategoryFiltersDeprecated(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
     {
         if ($categoryCriteriaTransfer->getIdCategory()) {
@@ -1223,12 +1094,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function applyCategorySorting(
         SpyCategoryQuery $categoryQuery,
         CategoryCriteriaTransfer $categoryCriteriaTransfer
@@ -1241,12 +1106,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $categoryQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function applyCategoryDeleteFilters(
         SpyCategoryQuery $categoryQuery,
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
@@ -1254,12 +1113,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         return $this->buildQueryByConditions($categoryCollectionDeleteCriteriaTransfer->modifiedToArray(), $categoryQuery);
     }
 
-    /**
-     * @param array $conditions
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
-     */
     protected function buildQueryByConditions(
         array $conditions,
         SpyCategoryQuery $categoryQuery

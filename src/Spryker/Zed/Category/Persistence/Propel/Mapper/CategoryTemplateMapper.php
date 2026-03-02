@@ -12,12 +12,6 @@ use Orm\Zed\Category\Persistence\SpyCategoryTemplate;
 
 class CategoryTemplateMapper
 {
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryTemplate $categoryTemplateEntity
-     * @param \Generated\Shared\Transfer\CategoryTemplateTransfer $categoryTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer
-     */
     public function mapCategoryTemplateEntityToCategoryTemplateTransfer(
         SpyCategoryTemplate $categoryTemplateEntity,
         CategoryTemplateTransfer $categoryTemplateTransfer

@@ -40,9 +40,6 @@ class CreateCategoryClosureTableCollectionTest extends Unit
      */
     protected CategoryBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testCreatesCategoryClosureTableEntity(): void
     {
         // Arrange
@@ -68,9 +65,6 @@ class CreateCategoryClosureTableCollectionTest extends Unit
         $this->assertSame(0, $categoryClosureTableEntity->getDepth());
     }
 
-    /**
-     * @return void
-     */
     public function testCreatesCategoryClosureTableEntityForParentNode(): void
     {
         // Arrange
@@ -99,9 +93,6 @@ class CreateCategoryClosureTableCollectionTest extends Unit
         $this->assertSame(1, $categoryClosureTableEntity->getDepth());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsErrorWhenCategoryNodeDoesNotExist(): void
     {
         // Arrange

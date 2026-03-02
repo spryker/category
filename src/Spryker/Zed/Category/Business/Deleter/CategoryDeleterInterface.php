@@ -12,18 +12,8 @@ use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 
 interface CategoryDeleterInterface
 {
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategory(int $idCategory): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function deleteCategoryCollection(
         CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
     ): CategoryCollectionResponseTransfer;

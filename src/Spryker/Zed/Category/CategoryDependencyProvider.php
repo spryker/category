@@ -191,11 +191,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCategoryPostCreatePlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_POST_CREATE, function () {
@@ -205,11 +200,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCategoryPostUpdatePlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_POST_UPDATE, function () {
@@ -219,11 +209,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCategoryPostReadPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_POST_READ, function () {
@@ -233,11 +218,6 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCategoryStoreAssignerPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_CATEGORY_STORE_ASSIGNER, function () {

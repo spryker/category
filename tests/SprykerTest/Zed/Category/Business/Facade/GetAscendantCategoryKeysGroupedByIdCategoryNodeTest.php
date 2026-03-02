@@ -35,9 +35,6 @@ class GetAscendantCategoryKeysGroupedByIdCategoryNodeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testGetAscendantCategoryKeysGroupedByIdCategoryNodeChecksGroupedCategoryKeys(): void
     {
         // Arrange
@@ -75,9 +72,6 @@ class GetAscendantCategoryKeysGroupedByIdCategoryNodeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetAscendantCategoryKeysGroupedByIdCategoryNodeChecksCategoryWithoutParent(): void
     {
         // Arrange
@@ -98,9 +92,6 @@ class GetAscendantCategoryKeysGroupedByIdCategoryNodeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetAscendantCategoryKeysGroupedByIdCategoryNodeWithoutFilteringByIdCategoryNode(): void
     {
         // Arrange

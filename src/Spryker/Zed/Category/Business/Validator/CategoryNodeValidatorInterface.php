@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 
 interface CategoryNodeValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
-     */
     public function validate(
         CategoryNodeCollectionResponseTransfer $categoryNodeCollectionResponseTransfer
     ): CategoryNodeCollectionResponseTransfer;

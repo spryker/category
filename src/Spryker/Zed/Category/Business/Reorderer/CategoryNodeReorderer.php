@@ -49,13 +49,6 @@ class CategoryNodeReorderer implements CategoryNodeReordererInterface
      */
     protected CategoryToEventFacadeInterface $eventFacade;
 
-    /**
-     * @param \Spryker\Zed\Category\Business\Validator\CategoryNodeValidatorInterface $categoryNodeValidator
-     * @param \Spryker\Zed\Category\Business\Filter\CategoryNodeFilterInterface $categoryNodeFilter
-     * @param \Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface $categoryNodeReader
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     */
     public function __construct(
         CategoryNodeValidatorInterface $categoryNodeValidator,
         CategoryNodeFilterInterface $categoryNodeFilter,
@@ -70,11 +63,6 @@ class CategoryNodeReorderer implements CategoryNodeReordererInterface
         $this->eventFacade = $eventFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer
-     */
     public function reorderCategoryNodeCollection(
         CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
     ): CategoryNodeCollectionResponseTransfer {
@@ -104,11 +92,6 @@ class CategoryNodeReorderer implements CategoryNodeReordererInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer
-     *
-     * @return void
-     */
     protected function assertRequiredFields(CategoryNodeCollectionRequestTransfer $categoryNodeCollectionRequestTransfer): void
     {
         $categoryNodeCollectionRequestTransfer->requireIsTransactional()
@@ -169,9 +152,6 @@ class CategoryNodeReorderer implements CategoryNodeReordererInterface
         return true;
     }
 
-    /**
-     * @return void
-     */
     protected function triggerCategoryTreePublishEvent(): void
     {
         $this->eventFacade->trigger(

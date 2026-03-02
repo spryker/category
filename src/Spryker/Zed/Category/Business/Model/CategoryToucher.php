@@ -23,10 +23,6 @@ class CategoryToucher implements CategoryToucherInterface
      */
     protected $queryContainer;
 
-    /**
-     * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $queryContainer
-     */
     public function __construct(CategoryToTouchInterface $touchFacade, CategoryQueryContainerInterface $queryContainer)
     {
         $this->touchFacade = $touchFacade;
@@ -155,11 +151,6 @@ class CategoryToucher implements CategoryToucherInterface
         return $categoryNodeEntity;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function touchCategoryActive(int $idCategory): void
     {
         if (!$this->touchFacade->isTouchEnabled()) {

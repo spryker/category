@@ -30,9 +30,6 @@ class GetCategoryNodesTest extends Unit
      */
     protected CategoryBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testWillReturnCorrectNodeTransfersWithAvailableLocalizedAttributes(): void
     {
         // Arrange

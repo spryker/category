@@ -29,11 +29,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 {
     use ActiveRecordBatchProcessorTrait;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function createCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
     {
         $categoryMapper = $this->getFactory()->createCategoryMapper();
@@ -44,11 +39,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         return $categoryMapper->mapCategory($categoryEntity, $categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function createCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer
     {
         $categoryNodeMapper = $this->getFactory()->createCategoryNodeMapper();
@@ -86,11 +76,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $propelCollection->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function createCategoryClosureTableRootNode(NodeTransfer $nodeTransfer): void
     {
         $idCategoryNode = $nodeTransfer->getIdCategoryNodeOrFail();
@@ -99,11 +84,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryClosureTableEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function createCategoryClosureTableNodes(NodeTransfer $nodeTransfer): void
     {
         $categoryClosureTableEntities = $this->getFactory()
@@ -133,11 +113,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryClosureTableEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function createCategoryClosureTableParentEntriesForCategoryNode(NodeTransfer $nodeTransfer): void
     {
         $categoryClosureTableEntities = $this->getFactory()
@@ -168,12 +143,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $this->commit();
     }
 
-    /**
-     * @param int $idCategory
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     *
-     * @return void
-     */
     public function saveCategoryAttribute(int $idCategory, CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer): void
     {
         $categoryAttributeEntity = $this->getFactory()
@@ -192,12 +161,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryAttributeEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer $extraParentNodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function saveCategoryExtraParentNode(CategoryTransfer $categoryTransfer, NodeTransfer $extraParentNodeTransfer): NodeTransfer
     {
         $categoryNodeEntity = $this->getFactory()
@@ -214,11 +177,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->mapCategoryNode($categoryNodeEntity, new NodeTransfer());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategory(CategoryTransfer $categoryTransfer): void
     {
         $categoryEntity = $this->getFactory()->createCategoryQuery()
@@ -236,11 +194,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function updateCategoryNode(NodeTransfer $nodeTransfer): NodeTransfer
     {
         $categoryNodeMapper = $this->getFactory()->createCategoryNodeMapper();
@@ -258,11 +211,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         return $categoryNodeMapper->mapCategoryNode($categoryNodeEntity, $nodeTransfer);
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategory(int $idCategory): void
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection $categoryObjectCollection */
@@ -273,11 +221,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryObjectCollection->delete();
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryLocalizedAttributes(int $idCategory): void
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection $categoryAttributeObjectCollection */
@@ -288,11 +231,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryAttributeObjectCollection->delete();
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function deleteCategoryNode(int $idCategoryNode): void
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeObjectCollection */
@@ -303,11 +241,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryNodeObjectCollection->delete();
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function deleteCategoryClosureTable(int $idCategoryNode): void
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection $categoryClosureCollection */
@@ -320,11 +253,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryClosureCollection->delete();
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryStoreRelations(int $idCategory): void
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection $categoryStoreCollection */
@@ -335,11 +263,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         $categoryStoreCollection->delete();
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return void
-     */
     public function deleteCategoryClosureTableParentEntriesForCategoryNode(int $idCategoryNode): void
     {
         $categoryClosureTableQuery = $this->getFactory()
@@ -446,13 +369,6 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
         }
     }
 
-    /**
-     * @param int $idCategoryNode
-     * @param int $idCategoryNodeDescendant
-     * @param int $depth
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable
-     */
     protected function createCategoryClosureTableEntity(
         int $idCategoryNode,
         int $idCategoryNodeDescendant,

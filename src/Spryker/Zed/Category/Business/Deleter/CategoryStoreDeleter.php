@@ -16,19 +16,11 @@ class CategoryStoreDeleter implements CategoryStoreDeleterInterface
      */
     protected $categoryEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     */
     public function __construct(CategoryEntityManagerInterface $categoryEntityManager)
     {
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryStoreRelations(int $idCategory): void
     {
         $this->categoryEntityManager->deleteCategoryStoreRelations($idCategory);

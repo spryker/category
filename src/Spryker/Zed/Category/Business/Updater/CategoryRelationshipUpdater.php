@@ -70,11 +70,6 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         $this->categoryRelationUpdatePlugins = $categoryRelationUpdatePlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategoryRelationships(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -82,11 +77,6 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryRelationshipsTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->categoryTemplateSync->syncFromConfig();
@@ -101,11 +91,6 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         $this->handleStoreRelationUpdate($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCategoryRelationUpdatePlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryRelationUpdatePlugins as $categoryRelationUpdatePlugin) {
@@ -113,11 +98,6 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function handleStoreRelationUpdate(CategoryTransfer $categoryTransfer): void
     {
         if ($categoryTransfer->getStoreRelation() === null) {

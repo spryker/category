@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\NodeCollectionTransfer;
 
 interface CategoryNodeRelationExpanderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $categoryNodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function expandNodeCollectionWithRelations(
         NodeCollectionTransfer $categoryNodeCollectionTransfer
     ): NodeCollectionTransfer;

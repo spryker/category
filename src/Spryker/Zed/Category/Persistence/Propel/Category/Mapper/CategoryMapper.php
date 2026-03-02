@@ -15,12 +15,6 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
     public function mapCategoryTransferToCategoryEntity(
         CategoryTransfer $categoryTransfer,
         SpyCategory $categoryEntity
@@ -28,12 +22,6 @@ class CategoryMapper
         return $categoryEntity->fromArray($categoryTransfer->modifiedToArray());
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function mapCategoryEntityToCategoryTransfer(
         SpyCategory $categoryEntity,
         CategoryTransfer $categoryTransfer

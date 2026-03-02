@@ -22,24 +22,9 @@ interface CategoryToUrlInterface
      */
     public function createUrl($urlTransfer, ?LocaleTransfer $localeTransfer = null, ?string $resourceType = null, ?int $idResource = null): UrlTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
     public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return bool
-     */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
     public function deleteUrl(UrlTransfer $urlTransfer): void;
 }

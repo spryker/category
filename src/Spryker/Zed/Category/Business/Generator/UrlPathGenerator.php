@@ -48,12 +48,6 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         $this->categoryUrlPathPlugins = $categoryUrlPathPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     public function buildCategoryNodeUrlForLocale(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): string
     {
         $pathParts = $this->getUrlPathPartsForCategoryNode($nodeTransfer, $localeTransfer);
@@ -61,11 +55,6 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         return $this->generate($pathParts);
     }
 
-    /**
-     * @param array $categoryPath
-     *
-     * @return string
-     */
     public function generate(array $categoryPath): string
     {
         $formattedPath = [];
@@ -100,11 +89,6 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         return $this->generateCategoryUrlPaths($indexedCategoryUrlPathParts, $localeTransfer);
     }
 
-    /**
-     * @param array $categoryUrlPathParts
-     *
-     * @return array
-     */
     protected function getCategoryUrlPathPartIndexedByIdCategoryNode(array $categoryUrlPathParts): array
     {
         $indexedCategoryUrlPathParts = [];
@@ -135,12 +119,6 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         return $indexedCategoryUrlPaths;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     protected function getUrlPathPartsForCategoryNode(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): array
     {
         $categoryNodeUrlPathCriteriaTransfer = (new CategoryNodeUrlPathCriteriaTransfer())
@@ -153,12 +131,6 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         return $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
     }
 
-    /**
-     * @param array $categoryUrlPathParts
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return array
-     */
     protected function executeCategoryUrlPathPlugins(array $categoryUrlPathParts, LocaleTransfer $localeTransfer): array
     {
         foreach ($this->categoryUrlPathPlugins as $categoryUrlPathPlugin) {

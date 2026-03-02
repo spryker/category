@@ -11,9 +11,6 @@ use Codeception\Module;
 
 trait CategoryDataHelperTrait
 {
-    /**
-     * @return \SprykerTest\Zed\Category\Helper\CategoryDataHelper
-     */
     protected function getCategoryDataHelper(): CategoryDataHelper
     {
         /** @var \SprykerTest\Zed\Category\Helper\CategoryDataHelper $categoryDataHelper */
@@ -22,10 +19,5 @@ trait CategoryDataHelperTrait
         return $categoryDataHelper;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \Codeception\Module
-     */
     abstract protected function getModule(string $name): Module;
 }

@@ -69,9 +69,6 @@ class CreateCategoryUrlCollectionTest extends Unit
      */
     protected CategoryBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testCreatesCategoryUrl(): void
     {
         // Arrange
@@ -106,9 +103,6 @@ class CreateCategoryUrlCollectionTest extends Unit
         $this->assertRegExp(static::TEST_CATEGORY_URL_ASSERT_PATTERN, $categoryUrlEntity->getUrl());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsErrorWhenCategoryNodeDoesNotExist(): void
     {
         // Arrange
@@ -144,9 +138,6 @@ class CreateCategoryUrlCollectionTest extends Unit
         $this->assertNull($this->tester->findUrlCategoryEntityByNodeAndLocale($nodeTransfer, $localeTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsErrorWhenCategoryAttributeDoesNotExist(): void
     {
         // Arrange
@@ -181,9 +172,6 @@ class CreateCategoryUrlCollectionTest extends Unit
         $this->assertNull($this->tester->findUrlCategoryEntityByNodeAndLocale($nodeTransfer, $localeTransfer));
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsErrorWhenCategoryClosureTableDoesNotExist(): void
     {
         // Arrange

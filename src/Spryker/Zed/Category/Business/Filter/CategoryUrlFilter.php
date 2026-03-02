@@ -18,9 +18,6 @@ class CategoryUrlFilter implements CategoryUrlFilterInterface
      */
     protected ErrorExtractorInterface $errorExtractor;
 
-    /**
-     * @param \Spryker\Zed\Category\Business\Extractor\ErrorExtractorInterface $errorExtractor
-     */
     public function __construct(ErrorExtractorInterface $errorExtractor)
     {
         $this->errorExtractor = $errorExtractor;

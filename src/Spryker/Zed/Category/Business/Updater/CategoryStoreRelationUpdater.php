@@ -17,19 +17,11 @@ class CategoryStoreRelationUpdater implements CategoryStoreRelationUpdaterInterf
      */
     protected $categoryStoreAssignerPlugin;
 
-    /**
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface $categoryStoreAssignerPlugin
-     */
     public function __construct(CategoryStoreAssignerPluginInterface $categoryStoreAssignerPlugin)
     {
         $this->categoryStoreAssignerPlugin = $categoryStoreAssignerPlugin;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer
-     *
-     * @return void
-     */
     public function updateCategoryStoreRelation(UpdateCategoryStoreRelationRequestTransfer $updateCategoryStoreRelationRequestTransfer): void
     {
         $this->categoryStoreAssignerPlugin->handleStoreRelationUpdate($updateCategoryStoreRelationRequestTransfer);

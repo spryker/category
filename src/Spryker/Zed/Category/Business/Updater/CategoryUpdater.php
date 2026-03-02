@@ -78,11 +78,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         $this->categoryUpdateAfterPlugins = $categoryUpdateAfterPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function updateCategory(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -90,11 +85,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function updateCategoryCollection(
         CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
     ): CategoryCollectionResponseTransfer {
@@ -116,11 +106,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryTransaction(CategoryTransfer $categoryTransfer): void
     {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_BEFORE_UPDATE, $categoryTransfer);
@@ -132,11 +117,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         $this->executeCategoryUpdateAfterPlugins($categoryTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function triggerAfterUpdateEvents(CategoryTransfer $categoryTransfer): void
     {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_UPDATE, $categoryTransfer);
@@ -147,11 +127,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCategoryUpdateAfterPlugins(CategoryTransfer $categoryTransfer): void
     {
         foreach ($this->categoryUpdateAfterPlugins as $categoryUpdateAfterPlugin) {
@@ -159,11 +134,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function filterInvalidCategories(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
     ): CategoryCollectionResponseTransfer {
@@ -182,11 +152,6 @@ class CategoryUpdater implements CategoryUpdaterInterface
         return $categoryCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     protected function executeUpdateCategoryCollectionResponseTransaction(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
     ): CategoryCollectionResponseTransfer {

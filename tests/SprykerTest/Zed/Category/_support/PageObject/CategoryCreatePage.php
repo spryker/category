@@ -31,11 +31,6 @@ class CategoryCreatePage extends Category
         '#localizedAttributes-ibox-de_DE .ibox-tools',
     ];
 
-    /**
-     * @param string $categoryKey
-     *
-     * @return array
-     */
     public static function getCategorySelectorsWithValues(string $categoryKey): array
     {
         return [
@@ -49,13 +44,6 @@ class CategoryCreatePage extends Category
         ];
     }
 
-    /**
-     * @param string $name
-     * @param string $localeName
-     * @param int $position
-     *
-     * @return array
-     */
     public static function getAttributesSelector(string $name, string $localeName, int $position): array
     {
         return [
@@ -66,41 +54,21 @@ class CategoryCreatePage extends Category
         ];
     }
 
-    /**
-     * @param int $position
-     *
-     * @return string
-     */
     public static function getFieldSelectorCategoryName(int $position): string
     {
         return sprintf(static::FORM_FIELD_CATEGORY_NAME_PATTERN, $position);
     }
 
-    /**
-     * @param int $position
-     *
-     * @return string
-     */
     public static function getFieldSelectorCategoryTitle(int $position): string
     {
         return sprintf(static::FORM_FIELD_CATEGORY_TITLE_PATTERN, $position);
     }
 
-    /**
-     * @param int $position
-     *
-     * @return string
-     */
     public static function getFieldSelectorCategoryDescription(int $position): string
     {
         return sprintf(static::FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN, $position);
     }
 
-    /**
-     * @param int $position
-     *
-     * @return string
-     */
     public static function getFieldSelectorCategoryKeywords(int $position): string
     {
         return sprintf(static::FORM_FIELD_CATEGORY_KEYWORDS_PATTERN, $position);

@@ -9,10 +9,5 @@ namespace Spryker\Zed\Category\Business\Deleter;
 
 interface CategoryStoreDeleterInterface
 {
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryStoreRelations(int $idCategory): void;
 }

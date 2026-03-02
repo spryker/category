@@ -41,18 +41,12 @@ class CategoryUrlUpdaterTest extends Unit
      */
     protected CategoryConfig|MockObject $categoryConfigMock;
 
-    /**
-     * @return void
-     */
     protected function _before(): void
     {
         $this->categoryConfigMock = $this->mockCategoryConfig();
         $this->categoryUrlUpdater = new CategoryUrlUpdater($this->categoryConfigMock);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryUrlPathWithLanguagePrefix(): void
     {
         // Arrange
@@ -73,9 +67,6 @@ class CategoryUrlUpdaterTest extends Unit
         ], $result[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryUrlPathWithLocalePrefix(): void
     {
         // Arrange

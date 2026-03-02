@@ -12,19 +12,8 @@ use Generated\Shared\Transfer\NodeTransfer;
 
 interface UrlPathGeneratorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string
-     */
     public function buildCategoryNodeUrlForLocale(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): string;
 
-    /**
-     * @param array $categoryPath
-     *
-     * @return string
-     */
     public function generate(array $categoryPath): string;
 
     /**

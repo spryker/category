@@ -23,10 +23,6 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
      */
     protected $categoryConfig;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
-     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
-     */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
         CategoryConfig $categoryConfig
@@ -35,9 +31,6 @@ class CategoryTemplateSync implements CategoryTemplateSyncInterface
         $this->categoryConfig = $categoryConfig;
     }
 
-    /**
-     * @return void
-     */
     public function syncFromConfig(): void
     {
         $templateList = $this->categoryConfig->getTemplateList();

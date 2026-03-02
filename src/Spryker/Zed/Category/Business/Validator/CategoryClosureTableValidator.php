@@ -27,11 +27,6 @@ class CategoryClosureTableValidator implements CategoryClosureTableValidatorInte
         $this->categoryClosureTableValidatorRules = $categoryClosureTableValidatorRules;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     public function validateCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer {
@@ -62,12 +57,6 @@ class CategoryClosureTableValidator implements CategoryClosureTableValidatorInte
         return $categoryClosureTableCollectionResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer $categoryUrlCollectionResponseTransfer
-     * @param \Generated\Shared\Transfer\ErrorCollectionTransfer $postValidationErrorCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     protected function mergeErrors(
         CategoryClosureTableCollectionResponseTransfer $categoryUrlCollectionResponseTransfer,
         ErrorCollectionTransfer $postValidationErrorCollectionTransfer

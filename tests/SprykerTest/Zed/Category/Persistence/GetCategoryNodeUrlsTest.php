@@ -34,9 +34,6 @@ class GetCategoryNodeUrlsTest extends Unit
      */
     protected $categoryRepository;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class GetCategoryNodeUrlsTest extends Unit
         $this->categoryRepository = new CategoryRepository();
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodeUrlsFindsUrls(): void
     {
         // Arrange
@@ -60,9 +54,6 @@ class GetCategoryNodeUrlsTest extends Unit
         $this->assertNotEmpty($urlTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodeUrlsFindsUrlsByIdCategoryNodeList(): void
     {
         // Arrange

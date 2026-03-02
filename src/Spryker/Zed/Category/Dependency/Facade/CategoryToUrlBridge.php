@@ -38,31 +38,16 @@ class CategoryToUrlBridge implements CategoryToUrlInterface
         return $this->urlFacade->createUrl($urlTransfer, $localeTransfer, $resourceType, $idResource);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer
-     */
     public function updateUrl(UrlTransfer $urlTransfer): UrlTransfer
     {
         return $this->urlFacade->updateUrl($urlTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return bool
-     */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer): bool
     {
         return $this->urlFacade->hasUrlCaseInsensitive($urlTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     *
-     * @return void
-     */
     public function deleteUrl(UrlTransfer $urlTransfer): void
     {
         $this->urlFacade->deleteUrl($urlTransfer);

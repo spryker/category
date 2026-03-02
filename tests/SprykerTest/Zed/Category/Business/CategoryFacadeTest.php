@@ -77,9 +77,6 @@ class CategoryFacadeTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -90,25 +87,16 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryByIdWithRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getRootCategoryId()));
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryByIdWithNonRootCategoryReturnsCategoryTransfer(): void
     {
         $this->assertInstanceOf(CategoryTransfer::class, $this->getFacade()->findCategoryById($this->getNonRootCategoryId()));
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteByIdCategory(): void
     {
         $categoryTransfer = $this->getFacade()
@@ -148,9 +136,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEquals($categoryTransfer3->getCategoryNode()->getIdCategoryNode(), $resultNodes->getFirst()->getIdCategoryNode());
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteWillDeleteCategoryStoreRelation(): void
     {
         // Arrange
@@ -168,9 +153,6 @@ class CategoryFacadeTest extends Unit
         $this->assertSame(0, $categoryStoreRelationsCount, 'Relations between Category and Store should deleted.');
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteWillDeleteCategoryAndAssignNewParentStoreRelationToChildCategory(): void
     {
         // Arrange
@@ -207,9 +189,6 @@ class CategoryFacadeTest extends Unit
         $this->assertSame($expectedStoreRelationCount, $categoryStoreRelationsCount, 'Child category should have store relation based on the new parent category.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetAllCategoryCollectionRetrievesCategoriesWillReturnCategoryRelationTransfer(): void
     {
         $localeTransfer = $this->tester->haveLocale(['localeName' => 'de_DE']);
@@ -218,9 +197,6 @@ class CategoryFacadeTest extends Unit
         $this->assertGreaterThan(0, count($categoryCollectionTransfer->getCategories()));
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryWillFindExistingCategory(): void
     {
         // Arrange
@@ -235,9 +211,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEquals($resultCategoryTransfer->getCategoryKey(), $categoryTransfer->getCategoryKey());
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryWillFindExistingCategoryWithRequiredLocale(): void
     {
         // Arrange
@@ -269,9 +242,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryWillFindExistingCategoryWithFirstLevelChildrenOnly(): void
     {
         // Arrange
@@ -306,9 +276,6 @@ class CategoryFacadeTest extends Unit
         $this->assertCount(0, $childChildNode->getChildrenNodes()->getNodes());
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryWillFindExistingCategoryWithAllChildren(): void
     {
         // Arrange
@@ -349,9 +316,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEquals($secondChildNode->getIdCategoryNode(), $categoryTransfer3->getCategoryNode()->getIdCategoryNode());
     }
 
-    /**
-     * @return void
-     */
     public function testCreateCategoryWillCreateCategoryWithStoreRelation(): void
     {
         // Arrange
@@ -393,9 +357,6 @@ class CategoryFacadeTest extends Unit
         $this->assertNotNull($categoryStoreEntity, 'Relation between Category and Store should be successfully created.');
     }
 
-    /**
-     * @return void
-     */
     public function testCreateCategoryWillCreateCategoryNodeWithCorrectUrl(): void
     {
         // Arrange
@@ -443,9 +404,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEquals($expectedUrl, $urlEntity->getUrl(), 'Urls should be the same.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWithRelativeNodesWillReturnAllRequestedNodeTransfers(): void
     {
         // Arrange
@@ -480,9 +438,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids do not equal expected values.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWithRelativeNodesWillReturnNodeTransfersWithRelativeNodes(): void
     {
         // Arrange
@@ -525,9 +480,6 @@ class CategoryFacadeTest extends Unit
         $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids are not equal to expected values.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWithRelativeNodesWillReturnNodeTransfersWithRelativeNodesAndRelations(): void
     {
         // Arrange
@@ -567,9 +519,6 @@ class CategoryFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWithRelativeNodesWillReturnEmptyNodeCollectionForNotExistingCategoryNode(): void
     {
         // Arrange
@@ -592,9 +541,6 @@ class CategoryFacadeTest extends Unit
         $this->assertCount(0, $categoryNodeCollectionTransfer->getNodes(), 'The number of category nodes is not equal to the expected value.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWillReturnCorrectCategoryNodes(): void
     {
         // Arrange
@@ -622,9 +568,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWillReturnCorrectNodeTransfers(): void
     {
         // Arrange
@@ -671,9 +614,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillAddOnlyNewStoreRelation(): void
     {
         // Arrange
@@ -713,9 +653,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillDeleteObsoleteStoreRelation(): void
     {
         // Arrange
@@ -752,9 +689,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillNotCreateCategoryStoreRelationIfParentCategoryDontHaveIt(): void
     {
         // Arrange
@@ -795,9 +729,6 @@ class CategoryFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryStoreRelationExecutesPluginStack(): void
     {
         // Arrange
@@ -810,9 +741,6 @@ class CategoryFacadeTest extends Unit
         $this->getFacade()->updateCategoryStoreRelation(new UpdateCategoryStoreRelationRequestTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testGetCategoryNodesWithFilterWillReturnCategoryNodesData(): void
     {
         // Arrange
@@ -842,9 +770,6 @@ class CategoryFacadeTest extends Unit
         $this->assertCount($expectedCount, $nodeCollectionTransfer->getNodes(), sprintf('Exactly %d category nodes should be found.', $expectedCount));
     }
 
-    /**
-     * @return void
-     */
     public function testFindCategoryWillFilterCategoryAttributesByProvidedLocale(): void
     {
         // Arrange
@@ -938,33 +863,21 @@ class CategoryFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return int
-     */
     protected function getRootCategoryId(): int
     {
         return $this->getCategoryNodeQuery()->findOneByIsRoot(true)->getFkCategory();
     }
 
-    /**
-     * @return int
-     */
     protected function getNonRootCategoryId(): int
     {
         return $this->getCategoryNodeQuery()->findOneByIsRoot(false)->getFkCategory();
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function getCategoryNodeQuery(): SpyCategoryNodeQuery
     {
         return SpyCategoryNodeQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
-     */
     protected function getFacade(): CategoryFacadeInterface
     {
         return $this->tester->getFacade();

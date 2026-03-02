@@ -35,11 +35,6 @@ class CategoryClosureTableUpdater implements CategoryClosureTableUpdaterInterfac
      */
     protected CategoryClosureTableFilterInterface $categoryClosureTableFilter;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Validator\CategoryClosureTableValidatorInterface $categoryClosureTableValidator
-     * @param \Spryker\Zed\Category\Business\Filter\CategoryClosureTableFilterInterface $categoryClosureTableFilter
-     */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
         CategoryClosureTableValidatorInterface $categoryClosureTableValidator,
@@ -50,11 +45,6 @@ class CategoryClosureTableUpdater implements CategoryClosureTableUpdaterInterfac
         $this->categoryClosureTableFilter = $categoryClosureTableFilter;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function updateCategoryClosureTableParentEntriesForCategoryNode(NodeTransfer $nodeTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($nodeTransfer) {
@@ -62,11 +52,6 @@ class CategoryClosureTableUpdater implements CategoryClosureTableUpdaterInterfac
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     public function updateCategoryClosureTableCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer {
@@ -93,11 +78,6 @@ class CategoryClosureTableUpdater implements CategoryClosureTableUpdaterInterfac
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     protected function executeUpdateCategoryClosureTableParentEntriesForCategoryNodeTransaction(NodeTransfer $nodeTransfer): void
     {
         $this->categoryEntityManager->deleteCategoryClosureTableParentEntriesForCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
@@ -116,11 +96,6 @@ class CategoryClosureTableUpdater implements CategoryClosureTableUpdaterInterfac
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return void
-     */
     protected function assertCategoryClosureTableCollectionRequiredFields(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): void {

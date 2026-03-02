@@ -79,9 +79,6 @@ class ReorderCategoryNodeCollectionTest extends Unit
         $this->tester->getFacade()->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testValidatesCategoryNodeExistence(): void
     {
         // Arrange
@@ -171,9 +168,6 @@ class ReorderCategoryNodeCollectionTest extends Unit
         $this->tester->getFacade()->reorderCategoryNodeCollection($categoryNodeCollectionRequestTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testShouldSetCorrectNodeOrderWhenRequestHasNotValidCategoryNodes(): void
     {
         // Arrange

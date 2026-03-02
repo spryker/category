@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryIdentifierBuilderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return string
-     */
     public function buildIdentifier(CategoryTransfer $categoryTransfer): string;
 }

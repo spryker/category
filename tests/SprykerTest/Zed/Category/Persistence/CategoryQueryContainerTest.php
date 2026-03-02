@@ -30,9 +30,6 @@ class CategoryQueryContainerTest extends Unit
      */
     public const ID_CATEGORY_NODE = 23;
 
-    /**
-     * @return void
-     */
     public function testQueryClosureTableParentEntriesMustReturnExecutableQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
@@ -42,9 +39,6 @@ class CategoryQueryContainerTest extends Unit
         $this->assertInstanceOf(SpyCategoryClosureTableQuery::class, $query);
     }
 
-    /**
-     * @return void
-     */
     public function testQueryAllCategoryNodesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();
@@ -53,9 +47,6 @@ class CategoryQueryContainerTest extends Unit
         $this->assertInstanceOf(SpyCategoryNodeQuery::class, $query);
     }
 
-    /**
-     * @return void
-     */
     public function testQueryAllCategoryAttributesReturnCorrectQuery(): void
     {
         $categoryQueryContainer = new CategoryQueryContainer();

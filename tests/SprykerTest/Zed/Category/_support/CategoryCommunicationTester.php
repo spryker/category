@@ -31,11 +31,6 @@ class CategoryCommunicationTester extends Actor
 {
     use _generated\CategoryCommunicationTesterActions;
 
-    /**
-     * @param array $seed
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
     public function buildLocaleTransfer(array $seed = []): LocaleTransfer
     {
         return (new LocaleBuilder($seed))->build();

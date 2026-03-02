@@ -13,18 +13,8 @@ use Generated\Shared\Transfer\CategoryTransfer;
 
 interface CategoryCreatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategory(CategoryTransfer $categoryTransfer): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
-     */
     public function createCategoryCollection(
         CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
     ): CategoryCollectionResponseTransfer;

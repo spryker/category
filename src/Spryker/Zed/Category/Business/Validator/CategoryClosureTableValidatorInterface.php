@@ -12,11 +12,6 @@ use Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer;
 
 interface CategoryClosureTableValidatorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryClosureTableCollectionResponseTransfer
-     */
     public function validateCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer;

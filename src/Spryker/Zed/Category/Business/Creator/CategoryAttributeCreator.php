@@ -20,19 +20,11 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
      */
     protected $categoryEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     */
     public function __construct(CategoryEntityManagerInterface $categoryEntityManager)
     {
         $this->categoryEntityManager = $categoryEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     public function createCategoryLocalizedAttributes(CategoryTransfer $categoryTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($categoryTransfer) {
@@ -40,11 +32,6 @@ class CategoryAttributeCreator implements CategoryAttributeCreatorInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function executeCreateCategoryLocalizedAttributesTransaction(CategoryTransfer $categoryTransfer): void
     {
         foreach ($categoryTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {

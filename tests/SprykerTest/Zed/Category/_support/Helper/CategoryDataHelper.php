@@ -62,11 +62,6 @@ class CategoryDataHelper extends Module
         $containerGlobals->set(CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER, $categoryStoreAssignerPluginStub);
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveCategory(array $seedData = []): CategoryTransfer
     {
         $categoryTransfer = $this->haveCategoryTransfer($seedData);
@@ -80,11 +75,6 @@ class CategoryDataHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveCategoryTransfer(array $seedData = []): CategoryTransfer
     {
         $seedData = $seedData + [
@@ -102,11 +92,6 @@ class CategoryDataHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveLocalizedCategory(array $seedData = []): CategoryTransfer
     {
         $parentNode = $this->getCategoryFacade()->getAllNodesByIdCategory(2)[0];
@@ -127,11 +112,6 @@ class CategoryDataHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
     public function haveCategoryTemplate(array $seedData = []): ?CategoryTemplateTransfer
     {
         $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
@@ -141,12 +121,6 @@ class CategoryDataHelper extends Module
         return $categoryTemplateTransfer;
     }
 
-    /**
-     * @param int $idCategory
-     * @param int $idStore
-     *
-     * @return void
-     */
     public function haveCategoryStoreRelation(int $idCategory, int $idStore): void
     {
         $categoryStoreEntity = SpyCategoryStoreQuery::create()
@@ -163,11 +137,6 @@ class CategoryDataHelper extends Module
         });
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveCategoryWithoutCategoryNode(array $seedData = []): CategoryTransfer
     {
         $categoryTransfer = $this->haveCategoryTransfer($seedData);
@@ -188,12 +157,6 @@ class CategoryDataHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param int $idCategory
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
-     */
     public function haveCategoryLocalizedAttributeForCategory(
         int $idCategory,
         array $seedData
@@ -218,12 +181,6 @@ class CategoryDataHelper extends Module
             ->fromArray($categoryAttributeEntity->toArray(), true);
     }
 
-    /**
-     * @param int $idCategory
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function haveCategoryNodeForCategory(int $idCategory, array $seedData = []): NodeTransfer
     {
         $nodeTransfer = $this->haveCategoryNodeTransfer($seedData);
@@ -241,11 +198,6 @@ class CategoryDataHelper extends Module
         return $nodeTransfer->fromArray($categoryNodeEntity->toArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function haveCategoryClosureTableForCategoryNode(NodeTransfer $nodeTransfer): void
     {
         $categoryClosureTableEntityEntity = new SpyCategoryClosureTable();
@@ -259,11 +211,6 @@ class CategoryDataHelper extends Module
         });
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
     protected function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer
     {
         $spyCategoryTemplate = $this->getLocator()
@@ -279,19 +226,11 @@ class CategoryDataHelper extends Module
         return (new CategoryTemplateTransfer())->fromArray($spyCategoryTemplate->toArray(), true);
     }
 
-    /**
-     * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
-     */
     protected function getCategoryFacade(): CategoryFacadeInterface
     {
         return $this->getLocator()->category()->facade();
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveLocalizedCategoryTransfer(array $seedData = []): CategoryTransfer
     {
         $categoryTransfer = $this->haveCategoryTransfer($seedData);
@@ -305,11 +244,6 @@ class CategoryDataHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
     public function haveCategoryNodeTransfer(array $seedData = []): NodeTransfer
     {
         $categoryNodeTransfer = (new NodeBuilder($seedData))->build();
@@ -317,11 +251,6 @@ class CategoryDataHelper extends Module
         return $categoryNodeTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     public function updateCategoryNode(NodeTransfer $nodeTransfer): void
     {
         $categoryNodeEntity = $this->getCategoryNodeQuery()
@@ -332,12 +261,6 @@ class CategoryDataHelper extends Module
         $categoryNodeEntity->save();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function updateCategoryLocalizedAttribute(
         CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer,
         int $idCategory
@@ -351,12 +274,6 @@ class CategoryDataHelper extends Module
         $categoryAttributeEntity->save();
     }
 
-    /**
-     * @param int $idCategoryNode
-     * @param int|null $fkCategoryNodeDescendant
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTable|null
-     */
     public function findCategoryClosureTableEntity(int $idCategoryNode, ?int $fkCategoryNodeDescendant = null): ?SpyCategoryClosureTable
     {
         $categoryClosureTableQuery = $this->getCategoryClosureTableQuery()
@@ -369,12 +286,6 @@ class CategoryDataHelper extends Module
         return $categoryClosureTableQuery->findOne();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl|null
-     */
     public function findUrlCategoryEntityByNodeAndLocale(NodeTransfer $nodeTransfer, LocaleTransfer $localeTransfer): ?SpyUrl
     {
         return $this->getUrlQuery()
@@ -383,21 +294,11 @@ class CategoryDataHelper extends Module
             ->findOne();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function cleanupCategory(CategoryTransfer $categoryTransfer): void
     {
         $this->getCategoryFacade()->delete($categoryTransfer->getIdCategory());
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryStore $categoryStoreEntity
-     *
-     * @return void
-     */
     protected function cleanupCategoryStoreRelation(SpyCategoryStore $categoryStoreEntity): void
     {
         SpyCategoryStoreQuery::create()
@@ -405,11 +306,6 @@ class CategoryDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute $categoryAttributeEntity
-     *
-     * @return void
-     */
     protected function cleanupCategoryAttribute(SpyCategoryAttribute $categoryAttributeEntity): void
     {
         SpyCategoryAttributeQuery::create()
@@ -417,11 +313,6 @@ class CategoryDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $categoryNodeEntity
-     *
-     * @return void
-     */
     protected function cleanupCategoryNode(SpyCategoryNode $categoryNodeEntity): void
     {
         SpyCategoryNodeQuery::create()
@@ -441,33 +332,21 @@ class CategoryDataHelper extends Module
         );
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
-     */
     protected function getCategoryClosureTableQuery(): SpyCategoryClosureTableQuery
     {
         return SpyCategoryClosureTableQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
-     */
     protected function getCategoryNodeQuery(): SpyCategoryNodeQuery
     {
         return SpyCategoryNodeQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     protected function getUrlQuery(): SpyUrlQuery
     {
         return SpyUrlQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
-     */
     protected function getCategoryAttributeQuery(): SpyCategoryAttributeQuery
     {
         return SpyCategoryAttributeQuery::create();

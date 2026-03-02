@@ -15,25 +15,10 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryReaderInterface
 {
-    /**
-     * @param int $idCategory
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategoryById(int $idCategory): ?CategoryTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function findCategory(CategoryCriteriaTransfer $categoryCriteriaTransfer): ?CategoryTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
-     */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**

@@ -24,12 +24,6 @@ class CategoryToEventFacadeBridge implements CategoryToEventFacadeInterface
         $this->eventFacade = $eventFacade;
     }
 
-    /**
-     * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
-     *
-     * @return void
-     */
     public function trigger(string $eventName, TransferInterface $transfer): void
     {
         $this->eventFacade->trigger($eventName, $transfer);

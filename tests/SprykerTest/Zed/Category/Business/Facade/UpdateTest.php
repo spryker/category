@@ -57,9 +57,6 @@ class UpdateTest extends Unit
      */
     protected CategoryBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -70,9 +67,6 @@ class UpdateTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryWhenParentCategoryIsChangedWillRemoveStoreRelationsMissingForParentCategory(): void
     {
         // Arrange
@@ -105,9 +99,6 @@ class UpdateTest extends Unit
         $this->assertCount(0, $childCategoryStoreRelationStoreIds, 'Number of category store relations does not equals to expected value.');
     }
 
-    /**
-     * @return void
-     */
     public function testShouldUpdateParentCategoryForRootCategory(): void
     {
         // Arrange
@@ -139,9 +130,6 @@ class UpdateTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateShouldUpdateCategoryWhenParentCategoryAndAdditionalParentSwitched(): void
     {
         // Arrange
@@ -188,9 +176,6 @@ class UpdateTest extends Unit
         $this->assertSame($extraParentCategoryNodeTransfer->getIdCategoryNodeOrFail(), $updatedExtraParentCategoryNodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
     {
         // Arrange
@@ -214,9 +199,6 @@ class UpdateTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateCategoryWithChildNodesWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
     {
         // Arrange
@@ -324,11 +306,6 @@ class UpdateTest extends Unit
         $this->assertSame(2, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $secondChildIdCategoryNode));
     }
 
-    /**
-     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
-     *
-     * @return \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
-     */
     protected function createCategoryEntityManager(CategoryConfig $categoryConfig): CategoryEntityManagerInterface
     {
         $categoryPersistenceFactory = new CategoryPersistenceFactory();

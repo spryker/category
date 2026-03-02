@@ -55,15 +55,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
      */
     protected $categoryNodePublisher;
 
-    /**
-     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
-     * @param \Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface $categoryTree
-     * @param \Spryker\Zed\Category\Business\Deleter\CategoryClosureTableDeleterInterface $categoryClosureTableDeleter
-     * @param \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface $categoryUrlDeleter
-     * @param \Spryker\Zed\Category\Business\Model\CategoryToucherInterface $categoryToucher
-     * @param \Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface $categoryNodePublisher
-     */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         CategoryEntityManagerInterface $categoryEntityManager,
@@ -82,11 +73,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         $this->categoryNodePublisher = $categoryNodePublisher;
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryNodesForCategory(int $idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
@@ -94,11 +80,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         });
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     public function deleteCategoryExtraParentNodesForCategory(int $idCategory): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
@@ -118,11 +99,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         });
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     protected function executeDeleteCategoryNodesForCategoryTransaction(int $idCategory): void
     {
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
@@ -135,11 +111,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         }
     }
 
-    /**
-     * @param int $idCategory
-     *
-     * @return void
-     */
     protected function executeDeleteCategoryExtraParentNodesTransaction(int $idCategory): void
     {
         $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
@@ -165,12 +136,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param int|null $idDestinationCategoryNode
-     *
-     * @return void
-     */
     protected function deleteNode(NodeTransfer $nodeTransfer, ?int $idDestinationCategoryNode = null): void
     {
         if ($nodeTransfer->getFkParentCategoryNode() !== null) {
@@ -190,11 +155,6 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
         $this->categoryToucher->touchCategoryNodeDeleted($nodeTransfer->getIdCategoryNodeOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     *
-     * @return void
-     */
     protected function deleteExtraParentNode(NodeTransfer $nodeTransfer): void
     {
         $this->categoryTree->moveSubTree(

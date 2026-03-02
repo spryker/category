@@ -38,33 +38,21 @@ class CategoryCrudHelper extends Module
      */
     protected const UUID_TWO = 'b7b94e0f-ec4d-4341-9132-07342b45f659';
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function haveCategoryTransferTwoPersisted(): ?CategoryTransfer
     {
         return $this->persistCategory($this->haveCategoryTransfer(['category_key' => static::UUID_TWO]));
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveCategoryTransferTwo(): CategoryTransfer
     {
         return $this->haveCategoryTransfer(['category_key' => static::UUID_ONE]);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     public function haveCategoryTransferOnePersisted(): ?CategoryTransfer
     {
         return $this->persistCategory($this->haveCategoryTransfer(['category_key' => static::UUID_ONE]));
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function haveCategoryTransferOne(): CategoryTransfer
     {
         return $this->haveCategoryTransfer(['category_key' => static::UUID_ONE]);
@@ -80,9 +68,6 @@ class CategoryCrudHelper extends Module
         return $this->getCategoryDataHelper()->haveCategoryTransfer($seed);
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryCriteriaTransfer
-     */
     public function haveCategoryCriteriaTransferOneCriteria(): CategoryCriteriaTransfer
     {
         $categoryCriteriaTransfer = new CategoryCriteriaTransfer();
@@ -93,9 +78,6 @@ class CategoryCrudHelper extends Module
         return $categoryCriteriaTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer
-     */
     public function haveCategoryDeleteCriteriaTransferOneCriteria(): CategoryCollectionDeleteCriteriaTransfer
     {
         $categoryCollectionDeleteCriteriaTransfer = new CategoryCollectionDeleteCriteriaTransfer();
@@ -104,9 +86,6 @@ class CategoryCrudHelper extends Module
         return $categoryCollectionDeleteCriteriaTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer
-     */
     public function haveCategoryDeleteCriteriaTransferTwoCriteria(): CategoryCollectionDeleteCriteriaTransfer
     {
         $categoryCollectionDeleteCriteriaTransfer = new CategoryCollectionDeleteCriteriaTransfer();
@@ -115,9 +94,6 @@ class CategoryCrudHelper extends Module
         return $categoryCollectionDeleteCriteriaTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\CategoryCriteriaTransfer
-     */
     public function haveCategoryCriteriaTransferTwoCriteria(): CategoryCriteriaTransfer
     {
         $categoryCriteriaTransfer = new CategoryCriteriaTransfer();
@@ -138,9 +114,6 @@ class CategoryCrudHelper extends Module
         return $this->persistCategory($this->haveCategoryTransfer($seed));
     }
 
-    /**
-     * @return void
-     */
     public function haveCategoryExpanderPluginSetUuidTwoEnabled(): void
     {
         $categoryExpanderPluginSetUuidTwo = new class (static::UUID_TWO) implements CategoryTransferExpanderPluginInterface {
@@ -149,19 +122,11 @@ class CategoryCrudHelper extends Module
             */
             private $categoryKey;
 
-           /**
-            * @param string $categoryKey
-            */
             public function __construct(string $categoryKey)
             {
                 $this->categoryKey = $categoryKey;
             }
 
-            /**
-             * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-             *
-             * @return \Generated\Shared\Transfer\CategoryTransfer
-             */
             public function expandCategory(CategoryTransfer $categoryTransfer): CategoryTransfer
             {
                 $categoryTransfer->setCategoryKey($this->categoryKey);
@@ -173,9 +138,6 @@ class CategoryCrudHelper extends Module
         $this->getBusinessHelper()->mockFactoryMethod('getCategoryTransferExpanderPlugins', [$categoryExpanderPluginSetUuidTwo], 'Category');
     }
 
-    /**
-     * @return void
-     */
     public function haveCategoryPostCreatePluginSetUuidTwoEnabled(): void
     {
         $categoryPostCreatePlugin = $this->mockCreatePlugin();
@@ -183,9 +145,6 @@ class CategoryCrudHelper extends Module
         $this->getBusinessHelper()->mockFactoryMethod('getCategoryCreateAfterPlugins', [$categoryPostCreatePlugin], 'Category');
     }
 
-    /**
-     * @return void
-     */
     public function haveCategoryPostUpdatePluginSetUuidTwoEnabled(): void
     {
         $categoryPostUpdatePlugin = $this->mockUpdatePlugin();
@@ -193,48 +152,26 @@ class CategoryCrudHelper extends Module
         $this->getBusinessHelper()->mockFactoryMethod('getCategoryUpdateAfterPlugins', [$categoryPostUpdatePlugin], 'Category');
     }
 
-    /**
-     * @return void
-     */
     public function haveCategoryAlwaysFailingCreateValidatorRuleEnabled(): void
     {
         $this->mockCategoryAlwaysFailingValidatorRule('getCategoryCreateValidatorRules');
     }
 
-    /**
-     * @return void
-     */
     public function haveCategoryAlwaysFailingUpdateValidatorRuleEnabled(): void
     {
         $this->mockCategoryAlwaysFailingValidatorRule('getCategoryUpdateValidatorRules');
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
-     *
-     * @return void
-     */
     public function assertCategoryCollectionIsEmpty(CategoryCollectionTransfer $categoryCollectionTransfer): void
     {
         $this->assertCount(0, $categoryCollectionTransfer->getCategories(), sprintf('Expected to have an empty collection but found "%s" items', $categoryCollectionTransfer->getCategories()->count()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     *
-     * @return void
-     */
     public function assertCategoryCollectionResponseIsEmpty(CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer): void
     {
         $this->assertCount(0, $categoryCollectionResponseTransfer->getCategories(), sprintf('Expected to have an empty response collection but found "%s" items', $categoryCollectionResponseTransfer->getCategories()->count()));
     }
 
-   /**
-    * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-    * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-    *
-    * @return void
-    */
     public function assertCategoryCollectionResponseContainsOneOneTransferWithId(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer,
         CategoryTransfer $categoryTransfer
@@ -245,23 +182,12 @@ class CategoryCrudHelper extends Module
         $this->assertCategoryCollectionResponseContainsOneOneTransfer($categoryCollectionResponseTransfer);
     }
 
-   /**
-    * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-    *
-    * @return void
-    */
     public function assertCategoryCollectionResponseContainsOneOneTransfer(CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer): void
     {
         $this->assertCount(1, $categoryCollectionResponseTransfer->getCategories());
         $this->assertEquals(static::UUID_ONE, $categoryCollectionResponseTransfer->getCategories()[0]->getCategoryKey());
     }
 
-   /**
-    * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-    * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-    *
-    * @return void
-    */
     public function assertCategoryCollectionResponseContainsOneTwoTransferWithId(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer,
         CategoryTransfer $categoryTransfer
@@ -272,23 +198,12 @@ class CategoryCrudHelper extends Module
         $this->assertCategoryCollectionResponseContainsOneTwoTransfer($categoryCollectionResponseTransfer);
     }
 
-   /**
-    * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-    *
-    * @return void
-    */
     public function assertCategoryCollectionResponseContainsOneTwoTransfer(CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer): void
     {
         $this->assertCount(1, $categoryCollectionResponseTransfer->getCategories());
         $this->assertEquals(static::UUID_TWO, $categoryCollectionResponseTransfer->getCategories()[0]->getCategoryKey());
     }
 
-   /**
-    * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
-    * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-    *
-    * @return void
-    */
     public function assertCategoryCollectionContainsTransferWithId(
         CategoryCollectionTransfer $categoryCollectionTransfer,
         CategoryTransfer $categoryTransfer
@@ -304,12 +219,6 @@ class CategoryCrudHelper extends Module
         $this->assertTrue($transferFound, sprintf('Expected to have a transfer in the collection but transfer by id "%s" was not found in the collection', $categoryTransfer->getIdCategory()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer
-     * @param string $message
-     *
-     * @return void
-     */
     public function assertCategoryCollectionResponseContainsFailedValidationRuleError(
         CategoryCollectionResponseTransfer $categoryCollectionResponseTransfer,
         string $message = 'Validation failed'
@@ -325,11 +234,6 @@ class CategoryCrudHelper extends Module
         $this->assertTrue($errorFound, sprintf('Expected to have a message "%s" in the error collection but was not found', $message));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer|null
-     */
     protected function persistCategory(CategoryTransfer $categoryTransfer): ?CategoryTransfer
     {
         $categoryCollectionRequestTransfer = new CategoryCollectionRequestTransfer();
@@ -340,11 +244,6 @@ class CategoryCrudHelper extends Module
         return $categoryCollectionResponseTransfer->getCategories()->getIterator()->current();
     }
 
-    /**
-     * @param int $expectedInvocations
-     *
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface
-     */
     protected function mockCreatePlugin(int $expectedInvocations = 1): CategoryCreateAfterPluginInterface
     {
         return Stub::makeEmpty(CategoryCreateAfterPluginInterface::class, [
@@ -354,11 +253,6 @@ class CategoryCrudHelper extends Module
         ]);
     }
 
-    /**
-     * @param int $expectedInvocations
-     *
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface
-     */
     protected function mockUpdatePlugin(int $expectedInvocations = 1): CategoryUpdateAfterPluginInterface
     {
         return Stub::makeEmpty(CategoryUpdateAfterPluginInterface::class, [
@@ -366,11 +260,6 @@ class CategoryCrudHelper extends Module
         ]);
     }
 
-    /**
-     * @param string $factoryMethod
-     *
-     * @return void
-     */
     protected function mockCategoryAlwaysFailingValidatorRule(string $factoryMethod): void
     {
         $categoryValidatorRule = new class implements \Spryker\Zed\Category\Business\Category\Validator\Rules\CategoryValidatorRuleInterface {
@@ -388,9 +277,6 @@ class CategoryCrudHelper extends Module
         $this->getBusinessHelper()->mockFactoryMethod($factoryMethod, [$categoryValidatorRule], 'Category');
     }
 
-    /**
-     * @return \Spryker\Zed\Category\Business\CategoryFacadeInterface
-     */
     protected function getFacade(): CategoryFacadeInterface
     {
         /** @phpstan-var \Spryker\Zed\Category\Business\CategoryFacadeInterface */

@@ -29,9 +29,6 @@ class CategoryHelper extends Module
 {
     use LocatorHelperTrait;
 
-    /**
-     * @return void
-     */
     public function _initialize(): void
     {
         if (class_exists(PropelApplicationPlugin::class)) {
@@ -44,11 +41,6 @@ class CategoryHelper extends Module
         $this->addBackwardCompatibleServiceProvider();
     }
 
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
     public function _before(TestInterface $test): void
     {
         parent::_before($test);
@@ -56,9 +48,6 @@ class CategoryHelper extends Module
         $this->cleanUpDatabase();
     }
 
-    /**
-     * @return void
-     */
     public function _afterSuite(): void
     {
         parent::_afterSuite();
@@ -79,11 +68,6 @@ class CategoryHelper extends Module
         $this->cleanUpDatabase();
     }
 
-    /**
-     * @param string $categoryKey
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
     public function createCategory(string $categoryKey): CategoryTransfer
     {
         $categoryFacade = new CategoryFacade();
@@ -110,11 +94,6 @@ class CategoryHelper extends Module
         return $categoryTransfer;
     }
 
-    /**
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
-     */
     public function loadCategoryByCategoryKey(string $categoryKey): SpyCategory
     {
         $categoryQuery = new SpyCategoryQuery();
@@ -133,11 +112,6 @@ class CategoryHelper extends Module
         $propelServiceProvider->boot(new Application());
     }
 
-    /**
-     * @param string $categoryKey
-     *
-     * @return void
-     */
     protected function removeCategory(string $categoryKey): void
     {
         $categoryQuery = new SpyCategoryQuery();
@@ -164,11 +138,6 @@ class CategoryHelper extends Module
         $categoryEntity->delete();
     }
 
-    /**
-     * @param string $name
-     *
-     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer|null
-     */
     protected function findCategoryTemplateByName(string $name): ?CategoryTemplateTransfer
     {
         $spyCategoryTemplate = $this->getLocator()
@@ -184,11 +153,6 @@ class CategoryHelper extends Module
         return (new CategoryTemplateTransfer())->fromArray($spyCategoryTemplate->toArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     *
-     * @return void
-     */
     protected function addLocalizedAttributesToCategoryTransfer(CategoryTransfer $categoryTransfer): void
     {
         $localeTransferCollection = $this->getLocaleTransferCollection();
@@ -220,9 +184,6 @@ class CategoryHelper extends Module
         return $localeTransferCollection;
     }
 
-    /**
-     * @return void
-     */
     private function cleanUpDatabase(): void
     {
         $this->removeCategory(CategoryCreatePage::CATEGORY_A);
