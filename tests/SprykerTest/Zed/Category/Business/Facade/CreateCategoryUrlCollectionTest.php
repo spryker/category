@@ -33,6 +33,8 @@ use SprykerTest\Zed\Category\CategoryBusinessTester;
  */
 class CreateCategoryUrlCollectionTest extends Unit
 {
+    protected const string TEST_LOCALE = 'en_US';
+
     /**
      * @var string
      */
@@ -76,7 +78,7 @@ class CreateCategoryUrlCollectionTest extends Unit
         $nodeTransfer = $this->tester->haveCategoryNodeForCategory($categoryTransfer->getIdCategoryOrFail());
         $this->tester->haveCategoryClosureTableForCategoryNode($nodeTransfer);
 
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
         $categoryLocalizedAttributesTransfer = $this->tester->createCategoryLocalizedAttributesForLocale(
             $localeTransfer,
             $categoryTransfer->getIdCategoryOrFail(),
@@ -109,7 +111,7 @@ class CreateCategoryUrlCollectionTest extends Unit
         $categoryTransfer = $this->tester->haveCategoryWithoutCategoryNode();
         $nodeTransfer = (new NodeBuilder([NodeTransfer::ID_CATEGORY_NODE => 0]))->build();
 
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
         $categoryLocalizedAttributesTransfer = $this->tester->createCategoryLocalizedAttributesForLocale(
             $localeTransfer,
             $categoryTransfer->getIdCategoryOrFail(),
@@ -145,7 +147,7 @@ class CreateCategoryUrlCollectionTest extends Unit
         $nodeTransfer = $this->tester->haveCategoryNodeForCategory($categoryTransfer->getIdCategoryOrFail());
         $this->tester->haveCategoryClosureTableForCategoryNode($nodeTransfer);
 
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
         $categoryLocalizedAttributesTransfer = (new CategoryLocalizedAttributesBuilder([
             CategoryLocalizedAttributesTransfer::LOCALE => $localeTransfer->toArray(),
         ]))->build();
@@ -178,7 +180,7 @@ class CreateCategoryUrlCollectionTest extends Unit
         $categoryTransfer = $this->tester->haveCategoryWithoutCategoryNode();
         $nodeTransfer = $this->tester->haveCategoryNodeForCategory($categoryTransfer->getIdCategoryOrFail());
 
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
         $categoryLocalizedAttributesTransfer = $this->tester->createCategoryLocalizedAttributesForLocale(
             $localeTransfer,
             $categoryTransfer->getIdCategoryOrFail(),

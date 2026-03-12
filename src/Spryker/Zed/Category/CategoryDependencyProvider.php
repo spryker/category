@@ -35,6 +35,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const FACADE_EVENT = 'facade event';
 
+    public const string FACADE_LOCALE = 'FACADE_LOCALE';
+
+    public const string FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -87,6 +91,14 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCategoryPostUpdatePlugins($container);
         $container = $this->addCategoryPostReadPlugins($container);
         $container = $this->addCategoryStoreAssignerPlugin($container);
+
+        return $container;
+    }
+
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -144,6 +156,24 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new CategoryToEventFacadeBridge($container->getLocator()->event()->facade());
+        });
+
+        return $container;
+    }
+
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        });
+
+        return $container;
+    }
+
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return $container->getLocator()->store()->facade();
         });
 
         return $container;

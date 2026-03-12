@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Category\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
@@ -25,15 +26,20 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Formatter\ArrayFormatter;
 use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Persistence\Exception\CategoryDefaultTemplateNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\OptimizedSimpleArrayFormatter;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -454,19 +460,37 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
     {
-        $urlQuery = $this->getFactory()
-            ->createUrlQuery()
-            ->joinSpyLocale()
-            ->withColumn(static::COL_LOCALE_NAME);
+        $categoryNodeIds = $categoryNodeUrlCriteriaTransfer->getCategoryNodeIds();
+        if (!$categoryNodeIds) {
+            $urlQuery = $this->getFactory()
+                ->createUrlQuery()
+                ->joinSpyLocale()
+                ->withColumn(static::COL_LOCALE_NAME);
 
-        if ($categoryNodeUrlCriteriaTransfer->getCategoryNodeIds()) {
-            $urlQuery->filterByFkResourceCategorynode_In(array_unique($categoryNodeUrlCriteriaTransfer->getCategoryNodeIds()));
+            $urlTransfers = [];
+            foreach ($urlQuery->setFormatter(new ArrayFormatter())->find() as $urlArray) {
+                $urlTransfers[] = (new UrlTransfer())->fromArray($urlArray, true);
+            }
+
+            return $urlTransfers;
         }
 
+        $categoryNodeIds = array_unique($categoryNodeIds);
         $urlTransfers = [];
 
-        foreach ($urlQuery->find() as $urlEntity) {
-            $urlTransfers[] = (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        $spyUrl = new SpyUrl();
+        $urlFields = $spyUrl->toArray();
+        foreach (array_chunk($categoryNodeIds, $this->getFactory()->getConfig()->getBatchReadChunkSize()) as $categoryNodeIdsChunk) {
+            $urlQuery = $this->getFactory()
+                ->createUrlQuery()
+                ->joinSpyLocale()
+                ->withColumn(static::COL_LOCALE_NAME)
+                ->filterByFkResourceCategorynode_In($categoryNodeIdsChunk)
+                ->select(array_keys($urlFields));
+
+            foreach ($urlQuery->setFormatter(new OptimizedSimpleArrayFormatter())->find() as $urlArray) {
+                $urlTransfers[] = (new UrlTransfer())->fromArray($urlArray, true);
+            }
         }
 
         return $urlTransfers;
@@ -563,42 +587,50 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             return $nodeCollectionTransfer;
         }
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
-        $categoryNodeQuery = $this->getFactory()
-            ->createCategoryNodeQuery()
-            ->leftJoinWithCategory()
-            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCategoryTemplate()
-            ->endUse()
-            ->filterByIdCategoryNode_In($relatedCategoryNodesIds);
+        $mapper = $this->getFactory()->createCategoryMapper();
+        $allNodes = [];
 
-        $categoryNodeQuery
-            ->orderByNodeOrder(Criteria::DESC)
-            ->distinct();
+        foreach (array_chunk($relatedCategoryNodesIds, $this->getFactory()->getConfig()->getBatchReadChunkSize()) as $relatedCategoryNodesIdsChunk) {
+            /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
+            $categoryNodeQuery = $this->getFactory()
+                ->createCategoryNodeQuery()
+                ->leftJoinWithCategory()
+                ->filterByIdCategoryNode_In($relatedCategoryNodesIdsChunk);
 
-        if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
-            $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
-                ->endUse();
+            $categoryNodeQuery
+                ->orderByNodeOrder(Criteria::DESC)
+                ->distinct();
+
+            if ($categoryNodeCriteriaTransfer->getIsActive() !== null) {
+                $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIsActive($categoryNodeCriteriaTransfer->getIsActive())
+                    ->endUse();
+            }
+
+            if ($categoryNodeCriteriaTransfer->getIsInMenu() !== null) {
+                $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByIsInMenu($categoryNodeCriteriaTransfer->getIsInMenu())
+                    ->endUse();
+            }
+
+            /** @var \Propel\Runtime\Collection\ArrayCollection $categoryNodes */
+            $categoryNodes = $categoryNodeQuery
+                ->setFormatter(new ArrayFormatter())
+                ->find();
+
+            $chunkNodeCollection = $mapper->mapCategoryNodeEntitiesToNodeCollectionTransfer(
+                $categoryNodes,
+                new NodeCollectionTransfer(),
+            );
+
+            foreach ($chunkNodeCollection->getNodes() as $node) {
+                $allNodes[] = $node;
+            }
         }
 
-        if ($categoryNodeCriteriaTransfer->getIsInMenu() !== null) {
-            $categoryNodeQuery->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->filterByIsInMenu($categoryNodeCriteriaTransfer->getIsInMenu())
-                ->endUse();
-        }
+        $nodeCollectionTransfer->setNodes(new ArrayObject($allNodes));
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeCollection */
-        $categoryNodeCollection = $categoryNodeQuery->find();
-        $categoryNodes = $categoryNodeCollection->toKeyIndex();
-
-        if ($categoryNodes === []) {
-            return $nodeCollectionTransfer;
-        }
-
-        return $this->getFactory()
-            ->createCategoryMapper()
-            ->mapCategoryNodeEntitiesToNodeCollectionTransfer($categoryNodes, $nodeCollectionTransfer);
+        return $nodeCollectionTransfer;
     }
 
     /**
@@ -610,15 +642,36 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoryAttributesByCategoryIdsGroupByIdCategory(array $categoryIds): array
     {
-        $categoryAttributeEntities = $this->getFactory()
-            ->createCategoryAttributeQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->joinWithLocale()
-            ->find();
+        if ($categoryIds === []) {
+            return [];
+        }
 
-        return $this->getFactory()
-            ->createCategoryLocalizedAttributeMapper()
-            ->mapCategoryAttributeEntitiesToCategoryLocalizedAttributesTransfersGroupedByIdCategory($categoryAttributeEntities);
+        $mapper = $this->getFactory()->createCategoryLocalizedAttributeMapper();
+        $allCategoryAttributes = [];
+
+        $selectFields = (new SpyCategoryAttribute())->toArray();
+        foreach (array_chunk($categoryIds, $this->getFactory()->getConfig()->getBatchReadChunkSize()) as $categoryIdsChunk) {
+            $categoryAttributeEntities = $this->getFactory()
+                ->createCategoryAttributeQuery()
+                ->filterByFkCategory_In($categoryIdsChunk)
+                ->setFormatter(new OptimizedSimpleArrayFormatter())
+                ->select(array_keys($selectFields))
+                ->find();
+
+            $chunkAttributes = $mapper->mapCategoryAttributeEntitiesToCategoryLocalizedAttributesTransfersGroupedByIdCategory($categoryAttributeEntities);
+
+            foreach ($chunkAttributes as $categoryId => $attributes) {
+                if (!isset($allCategoryAttributes[$categoryId])) {
+                    $allCategoryAttributes[$categoryId] = $attributes;
+
+                    continue;
+                }
+
+                $allCategoryAttributes[$categoryId] = array_merge($allCategoryAttributes[$categoryId], $attributes);
+            }
+        }
+
+        return $allCategoryAttributes;
     }
 
     /**
@@ -630,15 +683,26 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoryStoreRelationsByCategoryIds(array $categoryIds): array
     {
-        $categoryStoreEntities = $this->getFactory()
-            ->createCategoryStoreQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->joinWithSpyStore()
-            ->find();
+        if ($categoryIds === []) {
+            return [];
+        }
 
-        return $this->getFactory()
-            ->createCategoryStoreRelationMapper()
-            ->mapCategoryStoreEntitiesToStoreRelationTransfers($categoryStoreEntities);
+        $mapper = $this->getFactory()->createCategoryStoreRelationMapper();
+        $allStoreRelations = [];
+        $selectFields = (new SpyCategoryStore())->toArray();
+        foreach (array_chunk($categoryIds, $this->getFactory()->getConfig()->getBatchReadChunkSize()) as $categoryIdsChunk) {
+            $categoryStoreEntities = $this->getFactory()
+                ->createCategoryStoreQuery()
+                ->filterByFkCategory_In($categoryIdsChunk)
+                ->setFormatter(new OptimizedSimpleArrayFormatter())
+                ->select(array_keys($selectFields))
+                ->find();
+
+            $chunkStoreRelations = $mapper->mapCategoryStoreEntitiesToStoreRelationTransfers($categoryStoreEntities);
+            $allStoreRelations = array_merge($allStoreRelations, $chunkStoreRelations);
+        }
+
+        return $allStoreRelations;
     }
 
     /**
@@ -666,19 +730,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->mapNodeCollection($categoryNodeCollection, new NodeCollectionTransfer());
         }
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeCollection */
+        /** @var \Propel\Runtime\Collection\ArrayCollection $categoryNodeCollection */
         $categoryNodeCollection = $categoryNodeQuery
             ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
-            ->useCategoryQuery(null, Criteria::LEFT_JOIN)
-                ->leftJoinWithCategoryTemplate()
-            ->endUse()
+            ->setFormatter(new ArrayFormatter())
             ->find();
 
         return $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryNodeEntitiesToNodeCollectionTransfer(
-                $categoryNodeCollection->toKeyIndex(),
+                $categoryNodeCollection,
                 new NodeCollectionTransfer(),
             );
     }
@@ -891,9 +953,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                         ->endUse()
                         ->joinWithCategoryTemplate()
                         ->joinWithSpyCategoryStore()
-                            ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                                ->leftJoinWithSpyStore()
-                            ->endUse()
+                        ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
+                           ->leftJoinWithSpyStore()
+                        ->endUse()
                     ->endUse()
                 ->endUse();
         }

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Propel\Runtime\Collection\ArrayCollection;
 use Propel\Runtime\Collection\Collection;
 
 interface CategoryMapperInterface
@@ -35,14 +36,8 @@ interface CategoryMapperInterface
         ?CategoryCriteriaTransfer $categoryCriteriaTransfer = null
     ): CategoryCollectionTransfer;
 
-    /**
-     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function mapCategoryNodeEntitiesToNodeCollectionTransfer(
-        array $categoryNodeEntities,
+        ArrayCollection $categoryNodeArray,
         NodeCollectionTransfer $nodeCollectionTransfer
     ): NodeCollectionTransfer;
 

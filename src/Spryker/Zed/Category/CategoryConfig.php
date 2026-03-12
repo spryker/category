@@ -51,6 +51,11 @@ class CategoryConfig extends AbstractBundleConfig
     protected const DEFAULT_IS_CLOSURE_TABLE_EVENTS_ENABLED = true;
 
     /**
+     * @phpstan-var positive-int
+     */
+    protected const int BATCH_READ_CHUNK_SIZE = 1000;
+
+    /**
      * Specification:
      * - Returns the size of the batch retrieval.
      *
@@ -118,5 +123,20 @@ class CategoryConfig extends AbstractBundleConfig
     public function isFullLocaleNamesInUrlEnabled(): bool
     {
         return false;
+    }
+
+    /**
+     * Specification:
+     * - Returns the batch read chunk size for category queries.
+     *
+     * @api
+     *
+     * @phpstan-return positive-int
+     *
+     * @return int
+     */
+    public function getBatchReadChunkSize(): int
+    {
+        return static::BATCH_READ_CHUNK_SIZE;
     }
 }

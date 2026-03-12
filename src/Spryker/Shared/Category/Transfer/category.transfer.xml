@@ -272,4 +272,11 @@
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
+    <transfer name="StoreCriteria">
+        <property name="storeConditions" type="StoreConditions"/>
+    </transfer>
+
+    <transfer name="StoreConditions">
+        <property name="withExpanders" type="bool"/>
+    </transfer>
 </transfers>

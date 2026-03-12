@@ -18,11 +18,17 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Propel\Runtime\Collection\ArrayCollection;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class CategoryMapper implements CategoryMapperInterface
 {
+    protected const string CATEGORY = 'Category';
+
+    protected const string COL_FK_CATEGORY_TEMPLATE = 'fk_category_template';
+
     /**
      * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper
      */
@@ -38,21 +44,27 @@ class CategoryMapper implements CategoryMapperInterface
      */
     protected $categoryLocalizedAttributesUrlMapper;
 
-    /**
-     * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryTemplateMapper
-     */
     protected CategoryTemplateMapper $categoryTemplateMapper;
+
+    protected SpyCategoryTemplateQuery $categoryTemplateQuery;
+
+    /**
+     * @var array<int, \Generated\Shared\Transfer\CategoryTemplateTransfer>
+     */
+    protected static array $categoryTemplateCache = [];
 
     public function __construct(
         CategoryNodeMapper $categoryNodeMapper,
         CategoryStoreRelationMapper $categoryStoreRelationMapper,
         CategoryLocalizedAttributesUrlMapper $categoryLocalizedAttributesUrlMapper,
-        CategoryTemplateMapper $categoryTemplateMapper
+        CategoryTemplateMapper $categoryTemplateMapper,
+        SpyCategoryTemplateQuery $categoryTemplateQuery
     ) {
         $this->categoryNodeMapper = $categoryNodeMapper;
         $this->categoryStoreRelationMapper = $categoryStoreRelationMapper;
         $this->categoryLocalizedAttributesUrlMapper = $categoryLocalizedAttributesUrlMapper;
         $this->categoryTemplateMapper = $categoryTemplateMapper;
+        $this->categoryTemplateQuery = $categoryTemplateQuery;
     }
 
     public function mapCategory(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer
@@ -79,19 +91,13 @@ class CategoryMapper implements CategoryMapperInterface
         return $categoryTransfer;
     }
 
-    /**
-     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
-     */
     public function mapCategoryNodeEntitiesToNodeCollectionTransfer(
-        array $categoryNodeEntities,
+        ArrayCollection $categoryNodeArray,
         NodeCollectionTransfer $nodeCollectionTransfer
     ): NodeCollectionTransfer {
-        foreach ($categoryNodeEntities as $categoryNodeEntity) {
-            $nodeTransfer = $this->mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(
-                $categoryNodeEntity,
+        foreach ($categoryNodeArray as $categoryNodeData) {
+            $nodeTransfer = $this->mapCategoryNodeDataToNodeTransferWithCategoryTemplates(
+                $categoryNodeData,
                 new NodeTransfer(),
             );
 
@@ -136,6 +142,27 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryTransfer->setCategoryTemplate($categoryTemplateTransfer);
 
         return $nodeTransfer->setCategory($categoryTransfer);
+    }
+
+    /**
+     * @param array<string, mixed> $categoryNodeData
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function mapCategoryNodeDataToNodeTransferWithCategoryTemplates(array $categoryNodeData, NodeTransfer $nodeTransfer): NodeTransfer
+    {
+        $nodeTransfer = $nodeTransfer->fromArray($categoryNodeData, true);
+
+        if (isset($categoryNodeData[static::CATEGORY])) {
+            $categoryData = $categoryNodeData[static::CATEGORY];
+            $categoryTransfer = (new CategoryTransfer())->fromArray($categoryData, true);
+            $categoryTransfer->setCategoryTemplate($this->getCategoryTemplateFromCache($categoryNodeData[static::CATEGORY][static::COL_FK_CATEGORY_TEMPLATE]));
+
+            $nodeTransfer->setCategory($categoryTransfer);
+        }
+
+        return $nodeTransfer;
     }
 
     /**
@@ -283,5 +310,20 @@ class CategoryMapper implements CategoryMapperInterface
         }
 
         return $categoryTransfer;
+    }
+
+    protected function getCategoryTemplateFromCache(int $categoryTemplateId): CategoryTemplateTransfer
+    {
+        if (!isset(static::$categoryTemplateCache[$categoryTemplateId])) {
+            $categoryTemplateCollection = $this->categoryTemplateQuery->find();
+            foreach ($categoryTemplateCollection as $categoryTemplateEntity) {
+                static::$categoryTemplateCache[$categoryTemplateEntity->getIdCategoryTemplate()] = $this->categoryTemplateMapper->mapCategoryTemplateEntityToCategoryTemplateTransfer(
+                    $categoryTemplateEntity,
+                    new CategoryTemplateTransfer(),
+                );
+            }
+        }
+
+        return static::$categoryTemplateCache[$categoryTemplateId];
     }
 }
