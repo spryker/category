@@ -144,6 +144,24 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->mapCategoryCollection($spyCategories, new CategoryCollectionTransfer(), null);
     }
 
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer, PaginationTransfer $paginationTransfer): CategoryCollectionTransfer
+    {
+        $categoryQuery = SpyCategoryQuery::create();
+        $categoryQuery->joinAttribute()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::KEY_NAME)
+            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $localeTransfer->getIdLocaleOrFail(), Criteria::EQUAL)
+            ->select([SpyCategoryTableMap::COL_ID_CATEGORY, static::KEY_NAME])
+            ->limit($paginationTransfer->getLimitOrFail())
+            ->offset($paginationTransfer->getOffsetOrFail());
+
+        /** @var \Propel\Runtime\Collection\Collection<int, array<string, mixed>> $categoryRows */
+        $categoryRows = $categoryQuery->find();
+
+        return $this->getFactory()
+            ->createCategoryMapper()
+            ->mapCategoryRowsToCategoryCollectionTransfer($categoryRows, new CategoryCollectionTransfer());
+    }
+
     /**
      * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryRepository::getCategoryCollection()} instead.
      *

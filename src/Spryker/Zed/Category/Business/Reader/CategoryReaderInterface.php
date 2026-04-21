@@ -21,6 +21,8 @@ interface CategoryReaderInterface
 
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *

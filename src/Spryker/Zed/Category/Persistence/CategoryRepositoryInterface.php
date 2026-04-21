@@ -18,11 +18,14 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 
 interface CategoryRepositoryInterface
 {
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer, PaginationTransfer $paginationTransfer): CategoryCollectionTransfer;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface::getCategoryCollection()} instead.

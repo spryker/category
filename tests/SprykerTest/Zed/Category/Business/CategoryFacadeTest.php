@@ -943,4 +943,34 @@ class CategoryFacadeTest extends Unit
 
         return $storeIds;
     }
+
+    public function testGetCategoryOptionCollectionReturnsCategoriesWithIdAndNameForLocale(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_DE]);
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $this->tester->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+            ],
+        ]);
+
+        // Act
+        $result = $this->getFacade()->getCategoryOptionCollection($localeTransfer);
+
+        // Assert
+        $this->assertGreaterThan(0, $result->getCategories()->count());
+
+        $foundCategory = null;
+
+        foreach ($result->getCategories() as $category) {
+            if ($category->getIdCategory() === $categoryTransfer->getIdCategory()) {
+                $foundCategory = $category;
+
+                break;
+            }
+        }
+
+        $this->assertNotNull($foundCategory);
+        $this->assertNotEmpty($foundCategory->getName());
+    }
 }

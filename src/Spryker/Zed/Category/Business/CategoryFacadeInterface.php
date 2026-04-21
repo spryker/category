@@ -221,6 +221,19 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     * - Returns all category transfers with idCategory and name populated for the given locale.
+     * - Fetches categories in batches to avoid memory issues with large datasets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
      * - Retrieves collection with categories filtered by criteria.
      *
      * @api

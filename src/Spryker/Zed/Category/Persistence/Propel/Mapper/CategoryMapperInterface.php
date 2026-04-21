@@ -46,4 +46,12 @@ interface CategoryMapperInterface
     public function mapCategoryTransferToCategoryEntity(CategoryTransfer $categoryTransfer, SpyCategory $categoryEntity): SpyCategory;
 
     public function mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<int, array<string, mixed>> $categoryRows
+     */
+    public function mapCategoryRowsToCategoryCollectionTransfer(
+        Collection $categoryRows,
+        CategoryCollectionTransfer $categoryCollectionTransfer
+    ): CategoryCollectionTransfer;
 }

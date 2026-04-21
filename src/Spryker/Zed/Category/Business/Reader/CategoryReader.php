@@ -12,8 +12,10 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface;
 use Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryReader implements CategoryReaderInterface
@@ -62,7 +64,8 @@ class CategoryReader implements CategoryReaderInterface
         CategoryRepositoryInterface $categoryRepository,
         CategoryHydratorInterface $categoryHydrator,
         CategoryTreeReaderInterface $categoryTreeReader,
-        array $categoryTransferExpanderPlugins
+        array $categoryTransferExpanderPlugins,
+        protected CategoryConfig $categoryConfig,
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->categoryHydrator = $categoryHydrator;
@@ -106,6 +109,29 @@ class CategoryReader implements CategoryReaderInterface
         $this->categoryHydrator->hydrateCategoryCollection($categoryCollectionTransfer, $localeTransfer);
 
         return $categoryCollectionTransfer;
+    }
+
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        $mergedCollection = new CategoryCollectionTransfer();
+        $batchSize = $this->categoryConfig->getBatchReadChunkSize();
+        $offset = 0;
+
+        do {
+            $paginationTransfer = (new PaginationTransfer())
+                ->setLimit($batchSize)
+                ->setOffset($offset);
+
+            $batchCollection = $this->categoryRepository->getCategoryOptionCollection($localeTransfer, $paginationTransfer);
+
+            foreach ($batchCollection->getCategories() as $categoryTransfer) {
+                $mergedCollection->addCategory($categoryTransfer);
+            }
+
+            $offset += $batchSize;
+        } while ($batchCollection->getCategories()->count() === $batchSize);
+
+        return $mergedCollection;
     }
 
     /**

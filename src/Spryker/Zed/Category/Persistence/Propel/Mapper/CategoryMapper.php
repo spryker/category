@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
@@ -28,6 +29,8 @@ class CategoryMapper implements CategoryMapperInterface
     protected const string CATEGORY = 'Category';
 
     protected const string COL_FK_CATEGORY_TEMPLATE = 'fk_category_template';
+
+    protected const string KEY_NAME = 'name';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\Propel\Mapper\CategoryNodeMapper
@@ -207,6 +210,24 @@ class CategoryMapper implements CategoryMapperInterface
             }
 
             $categoryCollectionTransfer->addCategory($categoryTransfer);
+        }
+
+        return $categoryCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection<int, array<string, mixed>> $categoryRows
+     */
+    public function mapCategoryRowsToCategoryCollectionTransfer(
+        Collection $categoryRows,
+        CategoryCollectionTransfer $categoryCollectionTransfer
+    ): CategoryCollectionTransfer {
+        foreach ($categoryRows as $categoryRow) {
+            $categoryCollectionTransfer->addCategory(
+                (new CategoryTransfer())
+                    ->setIdCategory((int)$categoryRow[SpyCategoryTableMap::COL_ID_CATEGORY])
+                    ->setName((string)$categoryRow[static::KEY_NAME]),
+            );
         }
 
         return $categoryCollectionTransfer;

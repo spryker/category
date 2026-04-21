@@ -128,6 +128,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createCategoryHydrator(),
             $this->createCategoryTreeReader(),
             $this->getCategoryTransferExpanderPlugins(),
+            $this->getConfig(),
         );
     }
 

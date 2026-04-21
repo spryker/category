@@ -207,6 +207,18 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     */
+    public function getCategoryOptionCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createCategoryReader()
+            ->getCategoryOptionCollection($localeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
      *
      * @deprecated Use {@link \Spryker\Zed\Category\Business\CategoryFacade::getCategoryCollection()} instead.
      *
