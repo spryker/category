@@ -76,10 +76,7 @@ class CategoryLocalizedAttributeMapper
     protected function getCachedLocale(int $localeId): LocaleTransfer
     {
         if (!isset(static::$localeCache[$localeId])) {
-            $localeTransferCollection = $this->localeFacade->getLocaleCollection();
-            foreach ($localeTransferCollection as $localeTransfer) {
-                static::$localeCache[$localeTransfer->getIdLocaleOrFail()] = $localeTransfer;
-            }
+            static::$localeCache[$localeId] = $this->localeFacade->getLocaleById($localeId);
         }
 
         return static::$localeCache[$localeId];
