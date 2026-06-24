@@ -12,6 +12,8 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class CategoryConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * Used as `item_type` for touch mechanism.
      *
      * @var string
@@ -19,6 +21,8 @@ class CategoryConfig extends AbstractSharedConfig
     public const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';
 
     /**
+     * @api
+     *
      * Used as `item_type` for touch mechanism.
      *
      * @var string

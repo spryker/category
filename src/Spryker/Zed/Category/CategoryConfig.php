@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CategoryConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * Default available template for category
      *
      * @var string
@@ -21,11 +23,15 @@ class CategoryConfig extends AbstractBundleConfig
     public const CATEGORY_TEMPLATE_DEFAULT = 'Catalog (default)';
 
     /**
+     * @api
+     *
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_CATEGORY_NODE = SharedCategoryConfig::RESOURCE_TYPE_CATEGORY_NODE;
 
     /**
+     * @api
+     *
      * Used as `item_type` for touch mechanism.
      */
     public const RESOURCE_TYPE_NAVIGATION = SharedCategoryConfig::RESOURCE_TYPE_NAVIGATION;
