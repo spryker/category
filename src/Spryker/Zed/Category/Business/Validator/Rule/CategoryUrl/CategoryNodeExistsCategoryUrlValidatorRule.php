@@ -59,7 +59,7 @@ class CategoryNodeExistsCategoryUrlValidatorRule implements CategoryUrlValidator
             return $errorCollectionTransfer;
         }
 
-        $persistedCategoryNodeIds = $this->extractCategoryNodeIds($nodeCollectionTransfer->getNodes());
+        $persistedCategoryNodeIds = $this->extractNodeIds($nodeCollectionTransfer->getNodes());
         foreach ($categoryTransfers as $entityIdentifier => $categoryTransfer) {
             $idCategoryNode = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
             if (in_array($idCategoryNode, $persistedCategoryNodeIds, true)) {
@@ -87,6 +87,21 @@ class CategoryNodeExistsCategoryUrlValidatorRule implements CategoryUrlValidator
         $categoryNodeIds = [];
         foreach ($categoryTransfers as $categoryTransfer) {
             $categoryNodeIds[] = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
+        }
+
+        return $categoryNodeIds;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
+     *
+     * @return list<int>
+     */
+    protected function extractNodeIds(ArrayObject $nodeTransfers): array
+    {
+        $categoryNodeIds = [];
+        foreach ($nodeTransfers as $nodeTransfer) {
+            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
         }
 
         return $categoryNodeIds;
