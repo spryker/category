@@ -113,7 +113,7 @@ class CategoryStoreRelationMapper
     {
         if (!isset(static::$storeCache[$categoryStoreArray[static::COL_FK_STORE]])) {
             $storeCriteriaTransfer = (new StoreCriteriaTransfer())->setStoreConditions(
-                (new StoreConditionsTransfer())->setWithExpanders(false),
+                (new StoreConditionsTransfer())->setWithExpanders(true),
             );
             $storeCollection = $this->storeFacade->getStoreCollection($storeCriteriaTransfer);
             foreach ($storeCollection->getStores() as $storeTransfer) {
