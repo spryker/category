@@ -43,6 +43,15 @@
         <property name="name" type="string"/>
         <property name="templatePath" type="string"/>
     </transfer>
+    <transfer name="CategoryTemplateCriteria" strict="true">
+        <property name="categoryTemplateConditions" type="CategoryTemplateConditions"/>
+    </transfer>
+    <transfer name="CategoryTemplateConditions" strict="true">
+        <property name="names" type="string[]" singular="name"/>
+    </transfer>
+    <transfer name="CategoryTemplateCollection" strict="true">
+        <property name="categoryTemplates" type="CategoryTemplate[]" singular="categoryTemplate"/>
+    </transfer>
 
     <transfer name="Node">
         <property name="idCategoryNode" type="int"/>
@@ -145,6 +154,7 @@
         <property name="isMain" type="bool"/>
         <property name="withRelations" type="bool"/>
         <property name="filter" type="Filter"/>
+        <property name="parentCategoryNodeIds" type="int[]" singular="idParentCategoryNode" strict="true"/>
     </transfer>
 
     <transfer name="Image">
@@ -210,6 +220,15 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryWriteContext" strict="true">
+        <property name="categories" type="Category[]" singular="category"/>
+        <property name="categoryTemplate" type="CategoryTemplate"/>
+        <property name="categoryTemplates" type="CategoryTemplate[]" singular="categoryTemplate"/>
+        <property name="stores" type="Store[]" singular="store"/>
+        <property name="locales" type="Locale[]" singular="locale"/>
     </transfer>
 
     <transfer name="UpdateCategoryStoreRelationRequest">
@@ -280,6 +299,25 @@
 
     <transfer name="StoreConditions">
         <property name="withExpanders" type="bool"/>
+    </transfer>
+
+    <transfer name="CategoryImageSet">
+        <property name="idCategory" type="int"/>
+    </transfer>
+
+    <transfer name="CategoryImage">
+    </transfer>
+
+    <transfer name="CategoryImageSetCriteria" strict="true">
+        <property name="categoryImageSetConditions" type="CategoryImageSetConditions"/>
+    </transfer>
+
+    <transfer name="CategoryImageSetConditions" strict="true">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
+    <transfer name="CategoryImageSetCollection" strict="true">
+        <property name="categoryImageSets" type="CategoryImageSet[]" singular="categoryImageSet"/>
     </transfer>
 
     <transfer name="ValidationResponse">

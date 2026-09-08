@@ -7,6 +7,7 @@
         "php": ">=8.3",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/category-extension": "^1.2.0",
+        "spryker/category-image": "^1.0.0",
         "spryker/event": "^2.3.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0 || ^4.0.0",
@@ -14,16 +15,21 @@
         "spryker/propel": "^3.0.0",
         "spryker/propel-orm": "^1.22.0",
         "spryker/store": "^1.0.0",
+        "spryker/symfony": "^3.0.0",
         "spryker/touch": "^4.5.0",
         "spryker/transfer": "^3.27.0",
         "spryker/url": "^3.5.0",
         "spryker/uuid-behavior": "^1.3.0"
     },
     "require-dev": {
+        "spryker/api-platform": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/silex": "*",
         "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/api-platform": "Required to expose the categories Backend API resource; without it the resource schema is never discovered."
     },
     "autoload": {
         "psr-4": {

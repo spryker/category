@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
@@ -496,5 +498,20 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryClosureTableUpdater()
             ->updateCategoryClosureTableCollection($categoryClosureTableCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateCollectionTransfer
+     */
+    public function getCategoryTemplateCollection(
+        CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+    ): CategoryTemplateCollectionTransfer {
+        return $this->getRepository()->getCategoryTemplateCollection($categoryTemplateCriteriaTransfer);
     }
 }

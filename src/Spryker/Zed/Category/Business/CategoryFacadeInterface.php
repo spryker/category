@@ -18,6 +18,8 @@ use Generated\Shared\Transfer\CategoryNodeCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryNodeCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\CategoryUrlCollectionRequestTransfer;
 use Generated\Shared\Transfer\CategoryUrlCollectionResponseTransfer;
@@ -324,6 +326,7 @@ interface CategoryFacadeInterface
      * - Uses `CategoryNodeCriteriaTransfer.isRoot` to filter by category node is root.
      * - Uses `CategoryNodeCriteriaTransfer.categoryIds` to filter by category ids.
      * - Uses `CategoryNodeCriteriaTransfer.isMain` to filter by category node is main.
+     * - Uses `CategoryNodeCriteriaTransfer.parentCategoryNodeIds` to filter by direct parent category node ids.
      * - Uses `CategoryNodeCriteriaTransfer.filter.{limit, offset}` to paginate results with limit and offset.
      * - Uses `CategoryNodeCriteriaTransfer.filter.orderBy` to set the 'order by' field.
      * - Uses `CategoryNodeCriteriaTransfer.filter.orderDirection` to set ascending/descending order.
@@ -557,4 +560,20 @@ interface CategoryFacadeInterface
     public function updateCategoryClosureTableCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves category templates from persistence.
+     * - Uses `CategoryTemplateCriteriaTransfer.categoryTemplateConditions.names` to filter category templates by names.
+     * - Returns `CategoryTemplateCollectionTransfer` filled with found category templates.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateCollectionTransfer
+     */
+    public function getCategoryTemplateCollection(
+        CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+    ): CategoryTemplateCollectionTransfer;
 }

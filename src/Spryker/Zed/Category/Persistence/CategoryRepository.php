@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -809,6 +811,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryNodeQuery->filterByIsMain($categoryNodeCriteriaTransfer->getIsMain());
         }
 
+        if ($categoryNodeCriteriaTransfer->getParentCategoryNodeIds()) {
+            $categoryNodeQuery->filterByFkParentCategoryNode_In($categoryNodeCriteriaTransfer->getParentCategoryNodeIds());
+        }
+
         $filterTransfer = $categoryNodeCriteriaTransfer->getFilter();
         if ($filterTransfer !== null) {
             $categoryNodeQuery = $this
@@ -1238,5 +1244,30 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryTemplateEntity,
             new CategoryTemplateTransfer(),
         );
+    }
+
+    public function getCategoryTemplateCollection(
+        CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+    ): CategoryTemplateCollectionTransfer {
+        $categoryTemplateQuery = $this->getFactory()->createCategoryTemplateQuery();
+
+        $categoryTemplateConditionsTransfer = $categoryTemplateCriteriaTransfer->getCategoryTemplateConditions();
+        if ($categoryTemplateConditionsTransfer && $categoryTemplateConditionsTransfer->getNames()) {
+            $categoryTemplateQuery->filterByName_In($categoryTemplateConditionsTransfer->getNames());
+        }
+
+        $categoryTemplateCollectionTransfer = new CategoryTemplateCollectionTransfer();
+        $categoryTemplateMapper = $this->getFactory()->createCategoryTemplateMapper();
+
+        foreach ($categoryTemplateQuery->find() as $categoryTemplateEntity) {
+            $categoryTemplateCollectionTransfer->addCategoryTemplate(
+                $categoryTemplateMapper->mapCategoryTemplateEntityToCategoryTemplateTransfer(
+                    $categoryTemplateEntity,
+                    new CategoryTemplateTransfer(),
+                ),
+            );
+        }
+
+        return $categoryTemplateCollectionTransfer;
     }
 }

@@ -1,0 +1,332 @@
+resource:
+    name: Categories
+    shortName: categories
+    description: 'Category management for the Back Office (list, read, create, update incl. tree move/reorder, delete)'
+
+    provider: Spryker\Glue\Category\Api\Backend\Provider\CategoriesBackendProvider
+    processor: Spryker\Glue\Category\Api\Backend\Processor\CategoriesBackendProcessor
+
+    paginationEnabled: true
+    paginationItemsPerPage: 10
+
+    security: "is_granted('ROLE_USER')"
+
+    operations:
+        - type: GetCollection
+          description: >-
+              Retrieve a paginated category collection.
+              Pagination (JSON:API): `page[limit]` (default 10), `page[offset]` (default 0); the
+              pagination summary is returned as top-level `meta.pagination` with `links.first/last/prev/next`.
+              Sorting: `sort` accepts categoryKey, position or name, prefixed with `-` for descending;
+              an unsupported field returns 400. `name` sorts by the localized name in the request
+              locale (default locale as fallback); categories without a name in that locale are
+              not part of a name-sorted result.
+              Filtering: `parentCategoryKey` limits the collection to the direct children of that
+              category (additional-parent placements included); an unknown key returns 404.
+          normalizationContext:
+              skip_null_values: false
+          openapiContext:
+              summary: 'List categories'
+              responses:
+                  200:
+                      description: 'Category collection returned, with JSON:API pagination links.'
+                  400:
+                      description: 'Unsupported sort field.'
+                  401:
+                      description: 'Invalid or expired access token.'
+                  403:
+                      description: 'The operator has no ACL access to this resource.'
+                  404:
+                      description: 'The category given in the `parentCategoryKey` filter does not exist.'
+
+        - type: Get
+          description: 'Retrieve a single category by its categoryKey.'
+          normalizationContext:
+              skip_null_values: false
+          openapiContext:
+              summary: 'Retrieve a category'
+              responses:
+                  200:
+                      description: 'Category returned.'
+                  401:
+                      description: 'Invalid or expired access token.'
+                  403:
+                      description: 'The operator has no ACL access to this resource.'
+                  404:
+                      description: 'Category not found.'
+
+        - type: Post
+          description: >-
+              Create a category. Send isRoot: true (with parentCategoryKey omitted) to create
+              a root category; otherwise parentCategoryKey is required. Creating a root when a
+              root category already exists is rejected.
+              localizedAttributes must contain an entry with a non-empty name for EVERY configured
+              locale (mirroring the Back Office create form); missing locales are rejected.
+              Defaults on POST: isActive=false, isInMenu=true, isSearchable=true, isClickable=true.
+          deserialize: true
+          normalizationContext:
+              skip_null_values: false
+          openapiContext:
+              summary: 'Create a category'
+              responses:
+                  201:
+                      description: 'Category created.'
+                  401:
+                      description: 'Invalid or expired access token.'
+                  403:
+                      description: 'The operator has no ACL access to this resource.'
+                  422:
+                      description: 'Validation failed (duplicate categoryKey, second root category, unknown template/parent/store/locale, missing localized name for a configured locale, sibling name conflict, URL collision).'
+
+        - type: Patch
+          description: >-
+              Partially update a category. Changing parentCategoryKey moves the subtree
+              (URLs are regenerated); changing position reorders the node among its siblings.
+              Root status cannot be changed. categoryKey is immutable (it is the resource id).
+          deserialize: true
+          extraProperties:
+              read: false
+          normalizationContext:
+              skip_null_values: false
+          openapiContext:
+              summary: 'Update a category'
+              responses:
+                  200:
+                      description: 'Category updated.'
+                  401:
+                      description: 'Invalid or expired access token.'
+                  403:
+                      description: 'The operator has no ACL access to this resource.'
+                  404:
+                      description: 'Category not found.'
+                  422:
+                      description: 'Validation failed (unknown template/parent/store/locale, parent cycle, sibling name conflict, URL collision, root change attempt).'
+
+        - type: Delete
+          description: >-
+              Delete a category. Children of its main node are re-parented to the deleted
+              category's parent. All Additional-Parents placements of the deleted category are
+              removed: their subtrees are re-parented to each placement's parent and the
+              placement URLs are deleted. Related product/image/CMS relations are cleaned up.
+              A root category cannot be deleted.
+          openapiContext:
+              summary: 'Delete a category'
+              responses:
+                  204:
+                      description: 'Category deleted.'
+                  401:
+                      description: 'Invalid or expired access token.'
+                  403:
+                      description: 'The operator has no ACL access to this resource.'
+                  404:
+                      description: 'Category not found.'
+                  422:
+                      description: 'The category is a root category and cannot be deleted.'
+
+    properties:
+        categoryKey:
+            type: string
+            identifier: true
+            writable: true
+            readable: true
+            required: true
+            description: 'Unique business key of the category (identifier). Set on POST, immutable afterwards.'
+            openapiContext:
+                example: 'digital-cameras'
+
+        uuid:
+            type: string
+            writable: false
+            readable: true
+            nullable: true
+            description: >-
+                Read-only. Universally unique identifier of the category. The underlying `uuid`
+                column is optional, so this is `null` on installations that do not have it, and on
+                categories created before it was introduced until `uuid:generate Category
+                spy_category` has been run for them. `categoryKey` remains the addressable
+                identifier of this resource.
+            openapiContext:
+                example: 'cfe982b2-a558-5684-97d3-96f5ecf710c8'
+
+        isActive:
+            type: boolean
+            writable: true
+            readable: true
+            description: 'Whether the category is active. Default on POST: false.'
+            openapiContext:
+                example: true
+
+        isInMenu:
+            type: boolean
+            writable: true
+            readable: true
+            description: 'Whether the category is visible in the category tree/menu. Default on POST: true.'
+            openapiContext:
+                example: true
+
+        isSearchable:
+            type: boolean
+            writable: true
+            readable: true
+            description: 'Whether the category can be found via search. Default on POST: true.'
+            openapiContext:
+                example: true
+
+        isClickable:
+            type: boolean
+            writable: true
+            readable: true
+            description: 'Whether the category is clickable in the navigation. Default on POST: true.'
+            openapiContext:
+                example: true
+
+        templateName:
+            type: string
+            writable: true
+            readable: true
+            description: 'Category template name. Required on POST. Matched against existing category templates: leading/trailing whitespace is trimmed, the comparison is case-sensitive; an unknown template is rejected.'
+            openapiContext:
+                example: 'Catalog (default)'
+
+        parentCategoryKey:
+            type: string
+            writable: true
+            readable: true
+            nullable: true
+            description: 'categoryKey of the parent category, matched case-insensitively like every categoryKey lookup (the response carries the stored key). Required on POST unless isRoot=true. On PATCH, a new value moves the subtree under the new parent.'
+            openapiContext:
+                example: 'cameras-camcorders'
+
+        position:
+            type: integer
+            writable: true
+            readable: true
+            description: 'Numeric sort weight of the category node among its siblings: siblings are ordered by this value ascending, duplicates are allowed, setting it does not renumber other siblings.'
+            openapiContext:
+                example: 1
+
+        extraParentCategoryKeys:
+            type: array
+            writable: true
+            readable: true
+            nullable: true
+            description: 'categoryKeys of additional (extra) parent categories, matched case-insensitively (the response carries the stored keys). On PATCH the list is replaced. Omit the property to keep the stored value; send an empty array to remove all extra parents.'
+            openapiContext:
+                example: ['sale']
+
+        localizedAttributes:
+            type: array
+            description: 'Localized attributes, one entry per locale. On POST, an entry with a non-empty name is required for every configured locale. On PATCH, entries are merged by localeName.'
+            items:
+                type: object
+                properties:
+                    localeName:
+                        type: string
+                        required: true
+                        description: 'Locale this entry applies to.'
+                        openapiContext:
+                            example: 'de_DE'
+                    name:
+                        type: string
+                        required: true
+                        description: 'Localized category name. Must be unique among sibling categories in this locale.'
+                        openapiContext:
+                            example: 'Digitalkameras'
+                    metaTitle:
+                        type: string
+                        nullable: true
+                        description: 'Meta title for SEO.'
+                        openapiContext:
+                            example: 'Digitalkameras kaufen'
+                    metaDescription:
+                        type: string
+                        nullable: true
+                        description: 'Meta description for SEO.'
+                        openapiContext:
+                            example: 'Große Auswahl an Digitalkameras.'
+                    metaKeywords:
+                        type: string
+                        nullable: true
+                        description: 'Meta keywords for SEO.'
+                        openapiContext:
+                            example: 'kamera, digital'
+                    url:
+                        type: string
+                        writable: false
+                        nullable: true
+                        description: 'Read-only. Localized category URL, generated from the tree path; regenerated on move/rename.'
+                        openapiContext:
+                            example: '/de/kameras/digitalkameras'
+            openapiContext:
+                example:
+                    - localeName: 'de_DE'
+                      name: 'Digitalkameras'
+                      metaTitle: 'Digitalkameras kaufen'
+                      metaDescription: 'Große Auswahl an Digitalkameras.'
+                      metaKeywords: 'kamera, digital'
+                      url: '/de/kameras/digitalkameras'
+
+        stores:
+            type: array
+            writable: true
+            readable: true
+            nullable: true
+            description: 'Store names the category is assigned to. On PATCH the list is replaced: omit the property to keep the stored value, send an empty array to remove the category from all stores. Store assignment propagates to main children.'
+            openapiContext:
+                example: ['DE', 'AT']
+
+        imageSets:
+            type: array
+            nullable: true
+            description: 'Category image sets. On PATCH the list is replaced. Omit the property to keep the stored value.'
+            items:
+                type: object
+                properties:
+                    localeName:
+                        type: string
+                        required: true
+                        description: 'Locale this image set applies to.'
+                        openapiContext:
+                            example: 'de_DE'
+                    name:
+                        type: string
+                        required: true
+                        description: 'Image set name.'
+                        openapiContext:
+                            example: 'default'
+                    images:
+                        type: array
+                        items:
+                            type: object
+                            properties:
+                                externalUrlSmall:
+                                    type: string
+                                    description: 'URL of the small image.'
+                                    openapiContext:
+                                        example: 'https://images.example.com/cat-s.jpg'
+                                externalUrlLarge:
+                                    type: string
+                                    description: 'URL of the large image.'
+                                    openapiContext:
+                                        example: 'https://images.example.com/cat-l.jpg'
+                                sortOrder:
+                                    type: integer
+                                    description: 'Order of the image within the set.'
+                                    openapiContext:
+                                        example: 0
+            openapiContext:
+                example:
+                    - localeName: 'de_DE'
+                      name: 'default'
+                      images:
+                          - externalUrlSmall: 'https://images.example.com/cat-s.jpg'
+                            externalUrlLarge: 'https://images.example.com/cat-l.jpg'
+                            sortOrder: 0
+
+        isRoot:
+            type: boolean
+            writable: true
+            readable: true
+            description: 'Set to true on POST to create a root category (parentCategoryKey must be omitted then; only one root category may exist). Default: false. Cannot be changed on PATCH.'
+            openapiContext:
+                example: false

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Category\Business\Facade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use SprykerTest\Zed\Category\CategoryBusinessTester;
 
 /**
@@ -50,6 +51,34 @@ class GetCategoryNodesTest extends Unit
         $this->assertEqualsCanonicalizing(
             $this->getLocalizedAttributeNames($categoryTransfer->getLocalizedAttributes()),
             $this->getLocalizedAttributeNames($nodeTransfer->getCategoryOrFail()->getLocalizedAttributes()),
+        );
+    }
+
+    public function testGivenParentCategoryNodeIdsWhenGettingNodesThenOnlyDirectChildrenAreReturned(): void
+    {
+        // Arrange
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $parentNodeTransfer = $parentCategoryTransfer->getCategoryNodeOrFail();
+        $firstChildCategoryTransfer = $this->tester->haveCategory([CategoryTransfer::PARENT_CATEGORY_NODE => $parentNodeTransfer]);
+        $secondChildCategoryTransfer = $this->tester->haveCategory([CategoryTransfer::PARENT_CATEGORY_NODE => $parentNodeTransfer]);
+        $this->tester->haveCategory([CategoryTransfer::PARENT_CATEGORY_NODE => $firstChildCategoryTransfer->getCategoryNodeOrFail()]);
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->addIdParentCategoryNode($parentNodeTransfer->getIdCategoryNodeOrFail());
+
+        // Act
+        $nodeCollectionTransfer = $this->tester->getFacade()->getCategoryNodes($categoryNodeCriteriaTransfer);
+
+        // Assert
+        $childCategoryIds = [];
+        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
+            $childCategoryIds[] = $nodeTransfer->getFkCategoryOrFail();
+        }
+
+        $this->assertEqualsCanonicalizing(
+            [$firstChildCategoryTransfer->getIdCategoryOrFail(), $secondChildCategoryTransfer->getIdCategoryOrFail()],
+            $childCategoryIds,
+            'Only direct children must match; the grandchild belongs to another parent node.',
         );
     }
 

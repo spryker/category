@@ -1,0 +1,164 @@
+post:
+    categoryKey:
+        - NotBlank:
+              message: 'validation.not_blank'
+        - Length:
+              max: 255
+              maxMessage: 'validation.max_length.plural'
+
+    templateName:
+        - NotBlank:
+              message: 'validation.not_blank'
+        - Length:
+              max: 255
+              maxMessage: 'validation.max_length.plural'
+
+    parentCategoryKey:
+        - Optional:
+              constraints:
+                  - Length:
+                        max: 255
+                        maxMessage: 'validation.max_length.plural'
+
+    position:
+        - Optional:
+              constraints:
+                  - GreaterThanOrEqual:
+                        value: 0
+                        message: 'validation.greater_than_or_equal'
+
+    extraParentCategoryKeys:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - NotBlank:
+                                  message: 'validation.not_blank'
+
+    stores:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - NotBlank:
+                                  message: 'validation.not_blank'
+
+    localizedAttributes:
+        - NotBlank:
+              message: 'validation.not_blank'
+        - All:
+              constraints:
+                  - Collection:
+                        allowMissingFields: true
+                        fields:
+                            localeName:
+                                - NotBlank:
+                                      message: 'validation.not_blank'
+                            name:
+                                - NotBlank:
+                                      message: 'validation.not_blank'
+                                - Length:
+                                      max: 255
+                                      maxMessage: 'validation.max_length.plural'
+                            metaTitle:
+                                - Optional:
+                                      constraints:
+                                          - Length:
+                                                max: 255
+                                                maxMessage: 'validation.max_length.plural'
+                            metaDescription:
+                                - Optional:
+                                      constraints: []
+                            metaKeywords:
+                                - Optional:
+                                      constraints: []
+
+    imageSets:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - Collection:
+                                  allowMissingFields: true
+                                  fields:
+                                      localeName:
+                                          - NotBlank:
+                                                message: 'validation.not_blank'
+                                      name:
+                                          - NotBlank:
+                                                message: 'validation.not_blank'
+
+patch:
+    templateName:
+        - Optional:
+              constraints:
+                  - NotBlank:
+                        message: 'validation.not_blank'
+                  - Length:
+                        max: 255
+                        maxMessage: 'validation.max_length.plural'
+
+    parentCategoryKey:
+        - Optional:
+              constraints:
+                  - Length:
+                        max: 255
+                        maxMessage: 'validation.max_length.plural'
+
+    position:
+        - Optional:
+              constraints:
+                  - GreaterThanOrEqual:
+                        value: 0
+                        message: 'validation.greater_than_or_equal'
+
+    extraParentCategoryKeys:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - NotBlank:
+                                  message: 'validation.not_blank'
+
+    stores:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - NotBlank:
+                                  message: 'validation.not_blank'
+
+    localizedAttributes:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - Collection:
+                                  allowMissingFields: true
+                                  fields:
+                                      localeName:
+                                          - NotBlank:
+                                                message: 'validation.not_blank'
+                                      name:
+                                          - Optional:
+                                                constraints:
+                                                    - NotBlank:
+                                                          message: 'validation.not_blank'
+                                                    - Length:
+                                                          max: 255
+                                                          maxMessage: 'validation.max_length.plural'
+
+    imageSets:
+        - Optional:
+              constraints:
+                  - All:
+                        constraints:
+                            - Collection:
+                                  allowMissingFields: true
+                                  fields:
+                                      localeName:
+                                          - NotBlank:
+                                                message: 'validation.not_blank'
+                                      name:
+                                          - NotBlank:
+                                                message: 'validation.not_blank'

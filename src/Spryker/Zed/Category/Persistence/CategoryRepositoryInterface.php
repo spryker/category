@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCollectionTransfer;
+use Generated\Shared\Transfer\CategoryTemplateCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
@@ -154,6 +156,10 @@ interface CategoryRepositoryInterface
     ): CategoryCollectionTransfer;
 
     public function getDefaultCategoryTemplate(): CategoryTemplateTransfer;
+
+    public function getCategoryTemplateCollection(
+        CategoryTemplateCriteriaTransfer $categoryTemplateCriteriaTransfer
+    ): CategoryTemplateCollectionTransfer;
 
     /**
      * @param array<int> $categoryNodeIds
