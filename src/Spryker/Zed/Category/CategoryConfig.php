@@ -145,4 +145,17 @@ class CategoryConfig extends AbstractBundleConfig
     {
         return static::BATCH_READ_CHUNK_SIZE;
     }
+
+    /**
+     * Specification:
+     * - Enables the optional `uuid` column on the `spy_category` table.
+     * - When enabled, the `CategoryUuid` schema folder is merged during `propel:install`.
+     * - Consumers relying on category UUID (e.g. backend API existence checks) require this to be enabled.
+     *
+     * @api
+     */
+    public function isCategoryUuidEnabled(): bool
+    {
+        return false;
+    }
 }

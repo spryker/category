@@ -125,6 +125,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     protected const DEPTH_WITH_CHILDREN_RELATIONS = 1;
 
+    /**
+     * @uses \Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap::COL_UUID
+     */
+    protected const string COLUMN_UUID = 'uuid';
+
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         $categoryQuery = SpyCategoryQuery::create();
@@ -891,6 +896,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->getData();
     }
 
+    public function isCategoryUuidSupported(): bool
+    {
+        return SpyCategoryTableMap::getTableMap()->hasColumn(static::COLUMN_UUID);
+    }
+
     protected function applyCategoryFilters(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
     {
         if ($categoryCriteriaTransfer->getCategoryConditions() === null) {
@@ -905,6 +915,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         if ($categoryConditionsTransfer->getCategoryIds()) {
             $categoryQuery->filterByIdCategory_In($categoryConditionsTransfer->getCategoryIds());
+        }
+
+        if ($this->isCategoryUuidSupported() && $categoryConditionsTransfer->getUuids()) {
+            $categoryQuery->filterByUuid_In($categoryConditionsTransfer->getUuids());
         }
 
         if ($categoryConditionsTransfer->getIsMain() !== null) {

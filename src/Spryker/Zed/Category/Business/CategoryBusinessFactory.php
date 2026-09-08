@@ -63,6 +63,8 @@ use Spryker\Zed\Category\Business\Model\CategoryToucher;
 use Spryker\Zed\Category\Business\Model\CategoryToucherInterface;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTree;
 use Spryker\Zed\Category\Business\Model\CategoryTree\CategoryTreeInterface;
+use Spryker\Zed\Category\Business\Product\Validator\ProductCategoryValidator;
+use Spryker\Zed\Category\Business\Product\Validator\ProductCategoryValidatorInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryNodeReader;
@@ -668,5 +670,12 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function createErrorExtractor(): ErrorExtractorInterface
     {
         return new ErrorExtractor();
+    }
+
+    public function createProductCategoryValidator(): ProductCategoryValidatorInterface
+    {
+        return new ProductCategoryValidator(
+            $this->getRepository(),
+        );
     }
 }

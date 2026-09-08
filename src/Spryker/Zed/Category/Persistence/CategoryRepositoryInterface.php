@@ -161,4 +161,6 @@ interface CategoryRepositoryInterface
      * @return array<int>
      */
     public function getCategoryNodeIdsWithZeroDepthCategoryClosureTableEntities(array $categoryNodeIds): array;
+
+    public function isCategoryUuidSupported(): bool;
 }
