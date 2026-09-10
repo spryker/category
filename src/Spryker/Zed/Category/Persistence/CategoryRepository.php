@@ -916,7 +916,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $categoryConditionsTransfer = $categoryCriteriaTransfer->getCategoryConditionsOrFail();
 
         if ($categoryConditionsTransfer->getCategoryKeys()) {
-            $categoryQuery->filterByCategoryKey_In($categoryConditionsTransfer->getCategoryKeys());
+            $categoryQuery->where(
+                'LOWER(' . SpyCategoryTableMap::COL_CATEGORY_KEY . ') IN ?',
+                array_map('mb_strtolower', $categoryConditionsTransfer->getCategoryKeys()),
+            );
         }
 
         if ($categoryConditionsTransfer->getCategoryIds()) {
