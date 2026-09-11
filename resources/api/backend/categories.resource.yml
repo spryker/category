@@ -27,6 +27,22 @@ resource:
               skip_null_values: false
           openapiContext:
               summary: 'List categories'
+              parameters:
+                  - name: 'sort'
+                    in: query
+                    required: false
+                    description: 'Sort field, prefixed with `-` for descending order. `name` sorts by the localized name in the request locale (`Accept-Language`); categories without a name in that locale are left out of a name-sorted result. Any other field returns 400.'
+                    schema:
+                        type: string
+                        enum: ['categoryKey', '-categoryKey', 'position', '-position', 'name', '-name']
+                    example: 'position'
+                  - name: 'parentCategoryKey'
+                    in: query
+                    required: false
+                    description: 'Return only the direct children of the category with this key, including categories that have it as an additional parent. Matched case-insensitively. An unknown key returns 404.'
+                    schema:
+                        type: string
+                    example: 'computer'
               responses:
                   200:
                       description: 'Category collection returned, with JSON:API pagination links.'
