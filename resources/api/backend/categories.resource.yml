@@ -9,7 +9,7 @@ resource:
     paginationEnabled: true
     paginationItemsPerPage: 10
 
-    security: "is_granted('ROLE_USER')"
+    security: "is_granted('ROLE_BACK_OFFICE_USER')"
 
     operations:
         - type: GetCollection
