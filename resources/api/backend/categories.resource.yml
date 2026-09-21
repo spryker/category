@@ -100,8 +100,6 @@ resource:
               (URLs are regenerated); changing position reorders the node among its siblings.
               Root status cannot be changed. categoryKey is immutable (it is the resource id).
           deserialize: true
-          extraProperties:
-              read: false
           normalizationContext:
               skip_null_values: false
           openapiContext:
