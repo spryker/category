@@ -132,11 +132,17 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     protected const string COLUMN_UUID = 'uuid';
 
+    /**
+     * @module Locale
+     */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer
     {
         $categoryQuery = SpyCategoryQuery::create();
         $spyCategories = $categoryQuery
             ->joinWithAttribute()
+            ->useAttributeQuery()
+                ->joinWithLocale()
+            ->endUse()
             ->leftJoinWithNode()
             ->leftJoinWithSpyCategoryStore()
             ->addAnd(
@@ -225,6 +231,46 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         );
 
         return $this->generateNodePathString($nodePathQuery, static::NODE_PATH_GLUE);
+    }
+
+    /**
+     * @param array<int> $categoryNodeIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array<int, string>
+     */
+    public function getNodePathsIndexedByIdCategoryNode(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
+    {
+        if ($categoryNodeIds === []) {
+            return [];
+        }
+
+        /** @var \Propel\Runtime\Collection\ArrayCollection<int, array<string, mixed>> $nodePathRows */
+        $nodePathRows = $this->getFactory()->createCategoryNodeQuery()
+            ->useClosureTableQuery()
+                ->filterByFkCategoryNodeDescendant_In($categoryNodeIds)
+                ->filterByDepth(static::NODE_PATH_ZERO_DEPTH, Criteria::NOT_EQUAL)
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+                ->endUse()
+            ->endUse()
+            ->select([SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryAttributeTableMap::COL_NAME])
+            ->find();
+
+        $pathTokensIndexedByIdCategoryNode = array_fill_keys($categoryNodeIds, []);
+        foreach ($nodePathRows as $nodePathRow) {
+            $idCategoryNode = (int)$nodePathRow[SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT];
+            $pathTokensIndexedByIdCategoryNode[$idCategoryNode][] = $nodePathRow[SpyCategoryAttributeTableMap::COL_NAME];
+        }
+
+        return array_map(
+            static fn (array $pathTokens): string => implode(static::NODE_PATH_GLUE, $pathTokens),
+            $pathTokensIndexedByIdCategoryNode,
+        );
     }
 
     public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string

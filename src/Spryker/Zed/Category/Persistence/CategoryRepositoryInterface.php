@@ -46,6 +46,14 @@ interface CategoryRepositoryInterface
      */
     public function getNodePath(int $idCategoryNode, LocaleTransfer $localeTransfer);
 
+    /**
+     * @param array<int> $categoryNodeIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return array<int, string>
+     */
+    public function getNodePathsIndexedByIdCategoryNode(array $categoryNodeIds, LocaleTransfer $localeTransfer): array;
+
     public function getCategoryNodePath(int $idNode, LocaleTransfer $localeTransfer): string;
 
     public function checkSameLevelCategoryByNameExists(string $nodeName, CategoryTransfer $categoryTransfer): bool;

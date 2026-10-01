@@ -67,6 +67,8 @@ use Spryker\Zed\Category\Business\Product\Validator\ProductCategoryValidator;
 use Spryker\Zed\Category\Business\Product\Validator\ProductCategoryValidatorInterface;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisher;
 use Spryker\Zed\Category\Business\Publisher\CategoryNodePublisherInterface;
+use Spryker\Zed\Category\Business\Reader\CategoryNodePathReader;
+use Spryker\Zed\Category\Business\Reader\CategoryNodePathReaderInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryNodeReader;
 use Spryker\Zed\Category\Business\Reader\CategoryNodeReaderInterface;
 use Spryker\Zed\Category\Business\Reader\CategoryReader;
@@ -324,7 +326,12 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
 
     public function createCategoryHydrator(): CategoryHydratorInterface
     {
-        return new CategoryHydrator($this->getRepository());
+        return new CategoryHydrator($this->createCategoryNodePathReader());
+    }
+
+    public function createCategoryNodePathReader(): CategoryNodePathReaderInterface
+    {
+        return new CategoryNodePathReader($this->getRepository(), $this->getConfig());
     }
 
     public function createCategoryDeleter(): CategoryDeleterInterface

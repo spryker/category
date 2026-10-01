@@ -9,38 +9,40 @@ namespace Spryker\Zed\Category\Business\Model\Category;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
+use Spryker\Zed\Category\Business\Reader\CategoryNodePathReaderInterface;
 
 class CategoryHydrator implements CategoryHydratorInterface
 {
-    /**
-     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
-     */
-    protected $categoryRepository;
-
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    public function __construct(protected CategoryNodePathReaderInterface $categoryNodePathReader)
     {
-        $this->categoryRepository = $categoryRepository;
     }
 
     public function hydrateCategoryCollection(CategoryCollectionTransfer $categoryCollectionTransfer, LocaleTransfer $localeTransfer): void
     {
+        $nodePathsIndexedByIdCategoryNode = $this->categoryNodePathReader->getNodePathsIndexedByIdCategoryNode(
+            $this->extractCategoryNodeIds($categoryCollectionTransfer),
+            $localeTransfer,
+        );
+
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $this->hydrateNodeCollection($categoryTransfer->getNodeCollectionOrFail(), $localeTransfer);
+            foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
+                $nodeTransfer->setPath($nodePathsIndexedByIdCategoryNode[$nodeTransfer->getIdCategoryNodeOrFail()]);
+            }
         }
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
+     * @return array<int>
      */
-    protected function hydrateNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer, LocaleTransfer $localeTransfer)
+    protected function extractCategoryNodeIds(CategoryCollectionTransfer $categoryCollectionTransfer): array
     {
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $nodeTransfer->setPath($this->categoryRepository->getNodePath($nodeTransfer->getIdCategoryNodeOrFail(), $localeTransfer));
+        $categoryNodeIds = [];
+        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
+            foreach ($categoryTransfer->getNodeCollectionOrFail()->getNodes() as $nodeTransfer) {
+                $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
+            }
         }
+
+        return array_values(array_unique($categoryNodeIds));
     }
 }
