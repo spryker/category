@@ -111,9 +111,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     public const IS_NOT_ROOT_NODE = 0;
 
     /**
-     * @var string
+     * @uses \Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap::COL_NAME
      */
-    protected const COL_CATEGORY_NAME = 'name';
+    protected const string COL_CATEGORY_NAME = 'spy_category_attribute.name';
 
     /**
      * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME

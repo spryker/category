@@ -338,6 +338,7 @@
     </transfer>
 
     <transfer name="ProductAbstractCollectionResponse" strict="true">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
         <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
