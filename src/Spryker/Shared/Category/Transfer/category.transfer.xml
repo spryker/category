@@ -27,6 +27,7 @@
         <property name="fkCategoryTemplate" type="int"/>
         <property name="categoryTemplate" type="CategoryTemplate"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="imageSets" type="CategoryImageSet[]" singular="imageSet"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -303,9 +304,15 @@
 
     <transfer name="CategoryImageSet">
         <property name="idCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+        <property name="categoryImages" type="CategoryImage[]" singular="categoryImage"/>
     </transfer>
 
     <transfer name="CategoryImage">
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
+        <property name="sortOrder" type="int"/>
     </transfer>
 
     <transfer name="CategoryImageSetCriteria" strict="true">
@@ -327,12 +334,18 @@
     </transfer>
 
     <transfer name="ProductAbstractCollectionRequest" strict="true">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
     </transfer>
 
     <transfer name="ProductAbstractCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
     </transfer>
 
     <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store" description="A collection of store data transfer objects."/>
     </transfer>
 
 </transfers>
