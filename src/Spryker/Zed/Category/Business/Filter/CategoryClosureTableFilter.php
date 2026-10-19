@@ -35,7 +35,9 @@ class CategoryClosureTableFilter implements CategoryClosureTableFilterInterface
             $categoryClosureTableCollectionResponseTransfer->getErrors()->getArrayCopy(),
         );
 
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer> $validNodeTransfers */
         $validNodeTransfers = new ArrayObject();
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer> $notValidNodeTransfers */
         $notValidNodeTransfers = new ArrayObject();
         foreach ($categoryClosureTableCollectionResponseTransfer->getCategoryNodes() as $entityIdentifier => $nodeTransfer) {
             if (isset($erroredEntityIdentifiers[$entityIdentifier])) {

@@ -35,7 +35,9 @@ class CategoryNodeFilter implements CategoryNodeFilterInterface
             $categoryNodeCollectionResponseTransfer->getErrors()->getArrayCopy(),
         );
 
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer> $validCategoryNodeTransfers */
         $validCategoryNodeTransfers = new ArrayObject();
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\NodeTransfer> $notValidCategoryNodeTransfers */
         $notValidCategoryNodeTransfers = new ArrayObject();
 
         foreach ($categoryNodeCollectionResponseTransfer->getCategoryNodes() as $entityIdentifier => $categoryNodeTransfer) {

@@ -34,7 +34,9 @@ class CategoryUrlFilter implements CategoryUrlFilterInterface
             $categoryUrlCollectionResponseTransfer->getErrors()->getArrayCopy(),
         );
 
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\CategoryTransfer> $validCategoryTransfers */
         $validCategoryTransfers = new ArrayObject();
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\CategoryTransfer> $notValidCategoryTransfers */
         $notValidCategoryTransfers = new ArrayObject();
 
         foreach ($categoryUrlCollectionResponseTransfer->getCategories() as $entityIdentifier => $categoryTransfer) {
