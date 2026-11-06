@@ -306,6 +306,33 @@ class UpdateTest extends Unit
         $this->assertSame(2, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $secondChildIdCategoryNode));
     }
 
+    public function testGivenAnInactiveCategoryShownInMenuAndSearchWhenUpdateTogglesTheFlagsThenTheToggledFlagsArePersisted(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::IS_ACTIVE => false,
+            CategoryTransfer::IS_IN_MENU => true,
+            CategoryTransfer::IS_SEARCHABLE => true,
+        ]);
+
+        $categoryTransfer
+            ->setIsActive(true)
+            ->setIsInMenu(false)
+            ->setIsSearchable(false);
+
+        // Act
+        $this->tester->getFacade()->update($categoryTransfer);
+
+        // Assert
+        $persistedCategoryTransfer = $this->tester->getFacade()->findCategory(
+            (new CategoryCriteriaTransfer())->setIdCategory($categoryTransfer->getIdCategoryOrFail()),
+        );
+
+        $this->assertTrue($persistedCategoryTransfer->getIsActive());
+        $this->assertFalse($persistedCategoryTransfer->getIsInMenu());
+        $this->assertFalse($persistedCategoryTransfer->getIsSearchable());
+    }
+
     protected function createCategoryEntityManager(CategoryConfig $categoryConfig): CategoryEntityManagerInterface
     {
         $categoryPersistenceFactory = new CategoryPersistenceFactory();
