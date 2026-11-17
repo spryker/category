@@ -30,14 +30,14 @@ class CategoryClosureTableValidator implements CategoryClosureTableValidatorInte
     public function validateCollection(
         CategoryClosureTableCollectionRequestTransfer $categoryClosureTableCollectionRequestTransfer
     ): CategoryClosureTableCollectionResponseTransfer {
-        $NodeTransfers = $categoryClosureTableCollectionRequestTransfer->getCategoryNodes();
+        $nodeTransfers = $categoryClosureTableCollectionRequestTransfer->getCategoryNodes();
         $categoryClosureTableCollectionResponseTransfer = (new CategoryClosureTableCollectionResponseTransfer())
-            ->setCategoryNodes($NodeTransfers);
+            ->setCategoryNodes($nodeTransfers);
 
         $initialErrorCollectionTransfer = (new ErrorCollectionTransfer());
         foreach ($this->categoryClosureTableValidatorRules as $categoryUrlValidatorRule) {
             $initialErrorCollectionTransfer->setErrors($categoryClosureTableCollectionResponseTransfer->getErrors());
-            $postValidationErrorCollectionTransfer = $categoryUrlValidatorRule->validate($NodeTransfers);
+            $postValidationErrorCollectionTransfer = $categoryUrlValidatorRule->validate($nodeTransfers);
 
             $categoryClosureTableCollectionResponseTransfer = $this->mergeErrors(
                 $categoryClosureTableCollectionResponseTransfer,
