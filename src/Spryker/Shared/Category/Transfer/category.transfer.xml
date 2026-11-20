@@ -349,4 +349,13 @@
         <property name="stores" type="Store[]" singular="store" description="A collection of store data transfer objects."/>
     </transfer>
 
+    <transfer name="CategoryPathNode" strict="true">
+        <property name="idCategory" type="int" description="The ID of the category."/>
+        <property name="name" type="string" description="The name of the category in the locale of the path."/>
+        <property name="parentCategoryIds" type="int[]" singular="idParentCategory" description="The IDs of the parent categories of the category."/>
+    </transfer>
+
+    <transfer name="CategoryPathNodeCollection" strict="true">
+        <property name="nodes" type="CategoryPathNode[]" singular="node" description="The categories of a product with the categories above them; the categories without a parent among them are the top level."/>
+    </transfer>
 </transfers>
